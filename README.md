@@ -13,7 +13,7 @@
 #### Chạy web (Flask) + tự động chạy file
 
     python3 video.py
-#### Cơ dư dữ liệu
+#### Cơ sở dữ liệu
 
 - Trong file database cùng tên (dùng Xampp Mysql) (nếu đổi tên csdl thì vào file video.py)
 
