@@ -1,0 +1,37 @@
+Thực hiện: 21h57 08-02-2023
+
+==== ==== ==== ==== ==== ====
+EN_art_0_1000_01.txt , 1239, EN_art_0_1000_01_mau.txt , 1216, 97.93818 %
+EN_art_0_100_01.txt , 60, EN_art_0_100_01_mau.txt , 60, 100.0 %
+EN_art_0_100_02.txt , 69, EN_art_0_100_02_mau.txt , 84, 93.28541 %
+EN_art_0_300_01.txt , 292, EN_art_0_300_01_mau.txt , 288, 97.78932 %
+EN_art_0_300_02.txt , 186, EN_art_0_300_02_mau.txt , 177, 89.59089 %
+EN_art_0_500_01.txt , 668, EN_art_0_500_01_mau.txt , 667, 96.44445 %
+EN_art_0_50_01.txt , 53, EN_art_0_50_01_mau.txt , 52, 91.44671 %
+EN_art_0_50_02.txt , 42, EN_art_0_50_02_mau.txt , 44, 81.72949 %
+EN_art_1_100_01.txt , 38, EN_art_1_100_01_mau.txt , 60, 64.9171 %
+EN_art_1_100_02.txt , 49, EN_art_1_100_02_mau.txt , 84, 23.56314 %
+EN_art_1_300_01.txt , 255, EN_art_1_300_01_mau.txt , 288, 90.3389 %
+EN_art_1_300_02.txt , 63, EN_art_1_300_02_mau.txt , 177, 26.18941 %
+EN_art_1_500_01.txt , 630, EN_art_1_500_01_mau.txt , 667, 96.71634 %
+EN_art_1_50_01.txt , 23, EN_art_1_50_01_mau.txt , 52, 36.25318 %
+EN_art_1_50_02.txt , 16, EN_art_1_50_02_mau.txt , 44, 26.91915 %
+EN_gg_0_1000_01.txt , 856, EN_gg_0_1000_01_mau.txt , 1216, 97.84929 %
+EN_gg_0_100_01.txt , 31, EN_gg_0_100_01_mau.txt , 60, 73.07066 %
+EN_gg_0_100_02.txt , 71, EN_gg_0_100_02_mau.txt , 84, 95.24094 %
+EN_gg_0_300_01.txt , 67, EN_gg_0_300_01_mau.txt , 288, 82.53972 %
+EN_gg_0_300_02.txt , 110, EN_gg_0_300_02_mau.txt , 177, 85.22602 %
+EN_gg_0_500_01.txt , 143, EN_gg_0_500_01_mau.txt , 667, 80.44762 %
+EN_gg_0_50_01.txt , 52, EN_gg_0_50_01_mau.txt , 52, 100.0 %
+EN_gg_0_50_02.txt , 21, EN_gg_0_50_02_mau.txt , 44, 55.73794 %
+EN_gg_1_1000_01.txt , 900, EN_gg_1_1000_01_mau.txt , 1216, 96.95096 %
+EN_gg_1_100_01.txt , 60, EN_gg_1_100_01_mau.txt , 60, 93.40819 %
+EN_gg_1_100_02.txt , 84, EN_gg_1_100_02_mau.txt , 84, 98.08818 %
+EN_gg_1_300_01.txt , 276, EN_gg_1_300_01_mau.txt , 288, 95.26752 %
+EN_gg_1_300_02.txt , 168, EN_gg_1_300_02_mau.txt , 177, 87.94317 %
+EN_gg_1_500_01.txt , 328, EN_gg_1_500_01_mau.txt , 667, 89.95386 %
+EN_gg_1_50_01.txt , 52, EN_gg_1_50_01_mau.txt , 52, 100.0 %
+EN_gg_1_50_02.txt , 44, EN_gg_1_50_02_mau.txt , 44, 100.0 %
+
+=> Tổng số có 31 file đã thực thi 
+=> Thời gian thực thi: 0:00:00.171187
