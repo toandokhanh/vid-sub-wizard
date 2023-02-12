@@ -1,0 +1,27 @@
+Khong giam nhieu
+tunpham:2p17s
+video1:18s
+video2: 24s 
+video3: 1p
+video4: 32s
+video6: 17s
+video7: 2p25s
+video8: 1p34s
+video9: 3p30s
+video10: 2p13s
+
+Noise
+tunpham - 1p13s
+video1 - 19s
+video2 - 33s
+video3 - 56s
+video4 - 28s
+video6 - 20s
+video7 - 2p3s
+video8 - 1p52s
+video9 - 2p26s 
+video10 - 2p20s 
+
+
+
+

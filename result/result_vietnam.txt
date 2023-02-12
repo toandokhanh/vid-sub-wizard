@@ -1,0 +1,46 @@
+Thực hiện: 21h49 09-01-2023
+
+==== ==== ==== ==== ==== ====
+VI_art_0_1000_01.txt so sanh voi VI_art_0_1000_01_mau.txt: 65.9052 %
+VI_art_0_1000_02.txt so sanh voi VI_art_0_1000_02_mau.txt: 80.59094 %
+VI_art_0_100_01.txt so sanh voi VI_art_0_100_01_mau.txt: 68.63845 %
+VI_art_0_100_02.txt so sanh voi VI_art_0_100_02_mau.txt: 91.58402 %
+VI_art_0_300_01.txt so sanh voi VI_art_0_300_01_mau.txt: 85.99263 %
+VI_art_0_300_02.txt so sanh voi VI_art_0_300_02_mau.txt: 77.90294 %
+VI_art_0_500_01.txt so sanh voi VI_art_0_500_01_mau.txt: 84.14646 %
+VI_art_0_500_02.txt so sanh voi VI_art_0_500_02_mau.txt: 54.5602 %
+VI_art_0_50_01.txt so sanh voi VI_art_0_50_01_mau.txt: 69.62122 %
+VI_art_0_50_02.txt so sanh voi VI_art_0_50_02_mau.txt: 43.89879 %
+VI_art_1_1000_01.txt so sanh voi VI_art_1_1000_01_mau.txt: 96.05861 %
+VI_art_1_1000_02.txt so sanh voi VI_art_1_1000_02_mau.txt: 95.20928 %
+VI_art_1_100_01.txt so sanh voi VI_art_1_100_01_mau.txt: 92.58932 %
+VI_art_1_100_02.txt so sanh voi VI_art_1_100_02_mau.txt: 83.88841 %
+VI_art_1_300_01.txt so sanh voi VI_art_1_300_01_mau.txt: 93.94289 %
+VI_art_1_300_02.txt so sanh voi VI_art_1_300_02_mau.txt: 86.44784 %
+VI_art_1_500_01.txt so sanh voi VI_art_1_500_01_mau.txt: 94.09442 %
+VI_art_1_500_02.txt so sanh voi VI_art_1_500_02_mau.txt: 86.5706 %
+VI_art_1_50_01.txt so sanh voi VI_art_1_50_01_mau.txt: 78.71717 %
+VI_art_1_50_02.txt so sanh voi VI_art_1_50_02_mau.txt: 70.92202 %
+VI_gg_0_1000_01.txt so sanh voi VI_gg_0_1000_01_mau.txt: 96.64762 %
+VI_gg_0_1000_02.txt so sanh voi VI_gg_0_1000_02_mau.txt: 96.37842 %
+VI_gg_0_100_01.txt so sanh voi VI_gg_0_100_01_mau.txt: 87.37718 %
+VI_gg_0_100_02.txt so sanh voi VI_gg_0_100_02_mau.txt: 97.58393 %
+VI_gg_0_300_01.txt so sanh voi VI_gg_0_300_01_mau.txt: 91.3001 %
+VI_gg_0_300_02.txt so sanh voi VI_gg_0_300_02_mau.txt: 88.28459 %
+VI_gg_0_500_01.txt so sanh voi VI_gg_0_500_01_mau.txt: 97.31683 %
+VI_gg_0_500_02.txt so sanh voi VI_gg_0_500_02_mau.txt: 92.7593 %
+VI_gg_0_50_01.txt so sanh voi VI_gg_0_50_01_mau.txt: 95.79098 %
+VI_gg_0_50_02.txt so sanh voi VI_gg_0_50_02_mau.txt: 95.33163 %
+VI_gg_1_1000_01.txt so sanh voi VI_gg_1_1000_01_mau.txt: 96.59625 %
+VI_gg_1_1000_02.txt so sanh voi VI_gg_1_1000_02_mau.txt: 96.86617 %
+VI_gg_1_100_01.txt so sanh voi VI_gg_1_100_01_mau.txt: 85.63159 %
+VI_gg_1_100_02.txt so sanh voi VI_gg_1_100_02_mau.txt: 97.65994 %
+VI_gg_1_300_01.txt so sanh voi VI_gg_1_300_01_mau.txt: 92.13308 %
+VI_gg_1_300_02.txt so sanh voi VI_gg_1_300_02_mau.txt: 90.96826 %
+VI_gg_1_500_01.txt so sanh voi VI_gg_1_500_01_mau.txt: 95.1665 %
+VI_gg_1_500_02.txt so sanh voi VI_gg_1_500_02_mau.txt: 92.83462 %
+VI_gg_1_50_01.txt so sanh voi VI_gg_1_50_01_mau.txt: 100.0 %
+VI_gg_1_50_02.txt so sanh voi VI_gg_1_50_02_mau.txt: 87.96354 %
+
+=> Tổng số có 40 file đã thực thi 
+=> Thời gian thực thi: 0:00:00.115339

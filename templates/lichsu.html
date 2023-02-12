@@ -1,0 +1,70 @@
+{% extends "base.html" %} {% block title %} Tạo phụ đề cho video {% endblock %}
+{% block content %}
+<div>
+  <a href="/" class="href"
+    ><i class="fa fa-home" aria-hidden="true"></i>Trang chủ</a
+  >
+  <!-- {{message}} -->
+  {% if session['user'] %}
+  <div class="profile">
+    <div class="account">
+      <span><i class="fa fa-user" aria-hidden="true"></i></span>
+      <p class="name">{{session['user']}}</p>
+    </div>
+    <a href="/lichsu">
+      <i class="fa fa-history"></i>
+      Lịch sử</a
+    >
+    <a href="/dangxuat">
+      <i class="fa fa-sign-out"></i>
+      Đăng xuất</a
+    >
+  </div>
+  {% endif %} {% if quantity > 0 %}
+  <h3 class="mb-10">Lịch sử tạo phụ đề</h3>
+  <h1>Hiện tại có {{quantity}} video đã tạo phụ đề</h1>
+
+  <div class="history">
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Tên video</th>
+          <th>Ngôn ngữ</th>
+          <th>Ngày upload</th>
+          <th>Xem</th>
+          <th>Xoá</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for file in data %}
+
+        <tr>
+          <td class="file_srt">{{file['output_mp4']}}</td>
+          <td class="text-center">
+            {{file['ma_nn_input']}} / {{file['ma_nn_output']}}
+          </td>
+          <td>{{file['ngay_up']}}</td>
+          <th style="cursor: pointer">
+            <a class="view_srt" href="loading/{{file['output_mp4']}}"
+              >Xem <i class="fa fa-eye" aria-hidden="true"></i
+            ></a>
+          </th>
+          <th style="cursor: pointer">
+            <a class="delete_srt" data-name="{{file['output_mp4']}}"
+              >Xoá <i class="fa fa-remove" aria-hidden="true"></i
+            ></a>
+          </th>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <h3 class="empty">
+    <span>Lịch sử tạo phụ đề trống</span>
+    <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+    <a href="/">Tạo phụ đề ngay 😙</a>
+  </h3>
+  {% endif %}
+</div>
+{% endblock %}

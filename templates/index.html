@@ -1,0 +1,78 @@
+{% extends "base.html" %} {% block title %} Tạo phụ đề cho video {% endblock %}
+{% block content %}
+<!-- {{message}} -->
+{% if session['user'] %}
+<a href="/" class="href"
+  ><i class="fa fa-home" aria-hidden="true"></i>Trang chủ</a
+>
+<div class="modal">
+  <div class="loading">
+    <div class="music-waves-2">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+
+<div class="profile">
+  <div class="account">
+    <span><i class="fa fa-user" aria-hidden="true"></i></span>
+    <p class="name">Chào {{session['user']}}</p>
+  </div>
+  <a href="/lichsu">
+    <i class="fa fa-history"></i>
+    Lịch sử</a
+  >
+  <a href="/dangxuat">
+    <i class="fa fa-sign-out"></i>
+    Đăng xuất</a
+  >
+</div>
+{% endif %} {% with messages = get_flashed_messages() %} {% if messages %}
+<ul class="flash">
+  <!-- {% for message in messages %} -->
+  <span>
+    <i class="fa fa-check" aria-hidden="true"></i>
+  </span>
+  <li>{{ messages[0] }}</li>
+  <!-- {% endfor %} -->
+</ul>
+{% endif %} {% endwith %}
+<!-- {% with message1 = get_flashed_messages() %} {% if
+message1 %}
+<div class="up">{{message1[1]}}</div>
+{% endif %}{% endwith %} -->
+<div class="center">
+  <h1>Tạo phụ đề cho video của bạn!</h1>
+
+  <form method="POST" enctype="multipart/form-data" class="index">
+    {{form.hidden_tag()}} {{form.file()}}
+    <div class="lang">
+      <span>Ngôn ngữ nguồn</span>
+      {{form.language()}}
+    </div>
+    <div class="lang">
+      <span>Ngôn ngữ đích</span>
+      {{form.language2}}
+    </div>
+    <div class="subtitle">
+      <span>Tên phụ đề mới</span>
+      {{form.name}}
+    </div>
+    <div class="lang">
+      <span>Chọn giải thuật giảm nhiễu</span>
+      {{form.algorithm}}
+    </div>
+    {{form.submit()}}
+  </form>
+</div>
+
+<!-- <form method="POST" enctype="multipart/form-data">
+    <select name="language" id="language"></select>
+  </form> -->
+{% endblock %}

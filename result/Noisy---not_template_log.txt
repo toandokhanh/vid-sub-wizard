@@ -1,0 +1,8 @@
+Thực hiện: 08h56 09-02-2023
+
+==== ==== ==== ==== ==== ====
+VI_art_0_50_01.txt , 35, VI_art_0_50_01_mau.txt , 35, 100.0 %, connguoi, VI_gg_1_50_02_mau.txt ,18.666666666666668
+VI_gg_0_50_01.txt , 33, VI_gg_0_50_01_mau.txt , 35, 95.87977 %, google, VI_gg_1_50_02_mau.txt ,18.666666666666668
+
+=> Tổng số có 2 file đã thực thi 
+=> Thời gian thực thi: 0:00:00.006627
