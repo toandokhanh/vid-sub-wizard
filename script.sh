@@ -178,7 +178,7 @@
 
 # # chạy giải thuật -noise noise;
 # # # #VN - 50
-# python3 phude.py Noisy/VI_gg_0_50_01.mp4 -s vi -d vi -n not/VI_gg_0_50_01;
+python3 phude.py Noisy/VI_gg_0_50_01.mp4 -s vi -d vi -n not/VI_gg_0_50_01;
 python3 phude.py Noisy/VI_gg_1_50_01.mp4 -s vi -d vi -n not/VI_gg_1_50_01;
 python3 phude.py Noisy/VI_gg_0_50_02.mp4 -s vi -d vi -n not/VI_gg_0_50_02;
 python3 phude.py Noisy/VI_gg_1_50_02.mp4 -s vi -d vi -n not/VI_gg_1_50_02;
