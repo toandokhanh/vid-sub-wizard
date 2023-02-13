@@ -4,7 +4,7 @@
 
     conda install Pyaudio
 
-    pip3 install -r requirements2.txt
+    pip3 install -r requirements.txt
 
 #### Chạy tạo phụ đề riêng
 
