@@ -107,8 +107,10 @@ if __name__ == "__main__":
     print(file_log)
     f = open('result/'+str(file_log)+'.txt', 'w',encoding = 'utf-8')
     #f = open('result/result.txt', 'w',encoding = 'utf-8')
+    
     f.write("Thực hiện: "+str(time) + " " + str(dateVN) +"\n")
     f.write("\n==== ==== ==== ==== ==== ====\n")
+    f.write("Đầu ra, Số chữ đầu ra, Đầu vào, Số chữ đầu vào, Tác nhân, Số giây của video, Kết quả \n")
     result = []
     i=0
 

@@ -1,6 +1,7 @@
-Thực hiện: 13h36 12-02-2023
+Thực hiện: 21h59 14-02-2023
 
 ==== ==== ==== ==== ==== ====
+Đầu ra, Số chữ đầu ra, Đầu vào, Số chữ đầu vào, Tác nhân, Số giây của video, Kết quả 
 EN_art_0_1000_01.txt , 1146, EN_art_0_1000_01_mau.txt , 1216, connguoi, 558.00s, 97.56933%
 EN_art_0_100_01.txt , 60, EN_art_0_100_01_mau.txt , 60, connguoi, 27.36s, 100.0%
 EN_art_0_100_02.txt , 65, EN_art_0_100_02_mau.txt , 84, connguoi, 32.73s, 93.87621%
@@ -39,39 +40,38 @@ VI_art_0_100_02.txt , 18, VI_art_0_100_02_mau.txt , 48, connguoi, 12.73s, 41.032
 VI_art_0_300_01.txt , 14, VI_art_0_300_01_mau.txt , 82, connguoi, 26.37s, 31.59055%
 VI_art_0_300_02.txt , 13, VI_art_0_300_02_mau.txt , 144, connguoi, 41.10s, 26.9859%
 VI_art_0_500_01.txt , 8, VI_art_0_500_01_mau.txt , 312, connguoi, 80.23s, 33.41094%
-VI_art_0_500_02.txt , 0, VI_art_0_500_02_mau.txt , 202, connguoi, 51.37s, 0.0%
-VI_art_0_50_01.txt , 0, VI_art_0_50_01_mau.txt , 35, connguoi, 9.17s, 0.0%
-VI_art_0_50_02.txt , 0, VI_art_0_50_02_mau.txt , 55, connguoi, 20.70s, 0.0%
-VI_art_1_1000_01.txt , 634, VI_art_1_1000_01_mau.txt , 723, connguoi, 339.27s, 93.07577%
-VI_art_1_1000_02.txt , 646, VI_art_1_1000_02_mau.txt , 664, connguoi, 277.24s, 93.72502%
-VI_art_1_100_01.txt , 31, VI_art_1_100_01_mau.txt , 85, connguoi, 33.80s, 35.62018%
-VI_art_1_100_02.txt , 44, VI_art_1_100_02_mau.txt , 48, connguoi, 18.79s, 78.25062%
-VI_art_1_300_01.txt , 80, VI_art_1_300_01_mau.txt , 82, connguoi, 34.33s, 74.19828%
-VI_art_1_300_02.txt , 121, VI_art_1_300_02_mau.txt , 144, connguoi, 59.93s, 60.46133%
-VI_art_1_500_01.txt , 277, VI_art_1_500_01_mau.txt , 312, connguoi, 131.34s, 93.21386%
-VI_art_1_500_02.txt , 171, VI_art_1_500_02_mau.txt , 202, connguoi, 93.28s, 79.77614%
-VI_art_1_50_01.txt , 18, VI_art_1_50_01_mau.txt , 35, connguoi, 12.27s, 34.34509%
-VI_art_1_50_02.txt , 34, VI_art_1_50_02_mau.txt , 55, connguoi, 16.47s, 69.87692%
-VI_gg_0_1000_01.txt , 442, VI_gg_0_1000_01_mau.txt , 723, google, 218.57s, 91.01904%
-VI_gg_0_1000_02.txt , 317, VI_gg_0_1000_02_mau.txt , 664, google, 179.07s, 86.54966%
-VI_gg_0_100_01.txt , 64, VI_gg_0_100_01_mau.txt , 85, google, 35.73s, 70.75029%
-VI_gg_0_100_02.txt , 48, VI_gg_0_100_02_mau.txt , 48, google, 16.97s, 88.01037%
-VI_gg_0_300_01.txt , 80, VI_gg_0_300_01_mau.txt , 82, google, 31.63s, 96.54183%
-VI_gg_0_300_02.txt , 133, VI_gg_0_300_02_mau.txt , 144, google, 45.00s, 93.89423%
-VI_gg_0_500_01.txt , 237, VI_gg_0_500_01_mau.txt , 312, google, 102.77s, 94.30353%
-VI_gg_0_500_02.txt , 125, VI_gg_0_500_02_mau.txt , 202, google, 63.83s, 81.24569%
-VI_gg_0_50_01.txt , 33, VI_gg_0_50_01_mau.txt , 35, google, 10.77s, 95.87977%
-VI_gg_0_50_02.txt , 37, VI_gg_0_50_02_mau.txt , 55, google, 18.57s, 84.18152%
-VI_gg_1_1000_01.txt , 573, VI_gg_1_1000_01_mau.txt , 723, google, 180.70s, 94.78225%
-VI_gg_1_1000_02.txt , 568, VI_gg_1_1000_02_mau.txt , 664, google, 190.10s, 95.15841%
-VI_gg_1_100_01.txt , 29, VI_gg_1_100_01_mau.txt , 85, google, 24.87s, 57.95953%
-VI_gg_1_100_02.txt , 0, VI_gg_1_100_02_mau.txt , 48, google, 13.70s, 0.0%
-VI_gg_1_300_01.txt , 31, VI_gg_1_300_01_mau.txt , 82, google, 26.13s, 70.6069%
-VI_gg_1_300_02.txt , 50, VI_gg_1_300_02_mau.txt , 144, google, 39.87s, 59.09468%
-VI_gg_1_500_01.txt , 191, VI_gg_1_500_01_mau.txt , 312, google, 84.83s, 87.8435%
-VI_gg_1_500_02.txt , 197, VI_gg_1_500_02_mau.txt , 202, google, 58.27s, 93.64858%
-VI_gg_1_50_01.txt , 20, VI_gg_1_50_01_mau.txt , 35, google, 10.57s, 68.35971%
-VI_gg_1_50_02.txt , 47, VI_gg_1_50_02_mau.txt , 55, google, 18.67s, 90.19153%
+VI_art_0_50_01.txt , 0, VI_art_0_50_01_mau.txt , 35, connguoi, 51.37s, 0.0%
+VI_art_0_50_02.txt , 0, VI_art_0_50_02_mau.txt , 55, connguoi, 9.17s, 0.0%
+VI_art_1_1000_01.txt , 634, VI_art_1_1000_01_mau.txt , 723, connguoi, 20.70s, 93.07577%
+VI_art_1_1000_02.txt , 646, VI_art_1_1000_02_mau.txt , 664, connguoi, 339.27s, 93.72502%
+VI_art_1_100_01.txt , 31, VI_art_1_100_01_mau.txt , 85, connguoi, 277.24s, 35.62018%
+VI_art_1_100_02.txt , 44, VI_art_1_100_02_mau.txt , 48, connguoi, 33.80s, 78.25062%
+VI_art_1_300_01.txt , 80, VI_art_1_300_01_mau.txt , 82, connguoi, 18.79s, 74.19828%
+VI_art_1_300_02.txt , 121, VI_art_1_300_02_mau.txt , 144, connguoi, 34.33s, 60.46133%
+VI_art_1_500_01.txt , 277, VI_art_1_500_01_mau.txt , 312, connguoi, 59.93s, 93.21386%
+VI_art_1_500_02.txt , 171, VI_art_1_500_02_mau.txt , 202, connguoi, 131.34s, 79.77614%
+VI_art_1_50_01.txt , 18, VI_art_1_50_01_mau.txt , 35, connguoi, 93.28s, 34.34509%
+VI_art_1_50_02.txt , 34, VI_art_1_50_02_mau.txt , 55, connguoi, 12.27s, 69.87692%
+VI_gg_0_1000_01.txt , 442, VI_gg_0_1000_01_mau.txt , 723, google, 16.47s, 91.01904%
+VI_gg_0_1000_02.txt , 317, VI_gg_0_1000_02_mau.txt , 664, google, 218.57s, 86.54966%
+VI_gg_0_100_01.txt , 64, VI_gg_0_100_01_mau.txt , 85, google, 179.07s, 70.75029%
+VI_gg_0_100_02.txt , 48, VI_gg_0_100_02_mau.txt , 48, google, 35.73s, 88.01037%
+VI_gg_0_300_01.txt , 80, VI_gg_0_300_01_mau.txt , 82, google, 16.97s, 96.54183%
+VI_gg_0_300_02.txt , 133, VI_gg_0_300_02_mau.txt , 144, google, 31.63s, 93.89423%
+VI_gg_0_500_01.txt , 237, VI_gg_0_500_01_mau.txt , 312, google, 45.00s, 94.30353%
+VI_gg_0_500_02.txt , 125, VI_gg_0_500_02_mau.txt , 202, google, 102.77s, 81.24569%
+VI_gg_0_50_01.txt , 33, VI_gg_0_50_01_mau.txt , 35, google, 63.83s, 95.87977%
+VI_gg_0_50_02.txt , 37, VI_gg_0_50_02_mau.txt , 55, google, 10.77s, 84.18152%
+VI_gg_1_1000_01.txt , 573, VI_gg_1_1000_01_mau.txt , 723, google, 18.57s, 94.78225%
+VI_gg_1_1000_02.txt , 568, VI_gg_1_1000_02_mau.txt , 664, google, 180.70s, 95.15841%
+VI_gg_1_100_01.txt , 29, VI_gg_1_100_01_mau.txt , 85, google, 190.10s, 57.95953%
+VI_gg_1_100_02.txt , 0, VI_gg_1_100_02_mau.txt , 48, google, 24.87s, 0.0%
+VI_gg_1_300_01.txt , 31, VI_gg_1_300_01_mau.txt , 82, google, 13.70s, 70.6069%
+VI_gg_1_300_02.txt , 50, VI_gg_1_300_02_mau.txt , 144, google, 26.13s, 59.09468%
+VI_gg_1_500_01.txt , 191, VI_gg_1_500_01_mau.txt , 312, google, 39.87s, 87.8435%
+VI_gg_1_500_02.txt , 197, VI_gg_1_500_02_mau.txt , 202, google, 84.83s, 93.64858%
+VI_gg_1_50_01.txt , 20, VI_gg_1_50_01_mau.txt , 35, google, 58.27s, 68.35971%
+VI_gg_1_50_02.txt , 47, VI_gg_1_50_02_mau.txt , 55, google, 10.57s, 90.19153%
 
-=> Tổng số có 71 file đã thực thi 
-=> Thời gian thực thi: 0:00:01.597962
+=> Tổng số có 70 file đã thực thi 
+=> Thời gian thực thi: 0:00:01.538197

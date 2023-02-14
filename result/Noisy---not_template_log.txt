@@ -1,8 +1,9 @@
-Thực hiện: 08h56 09-02-2023
+Thực hiện: 22h09 14-02-2023
 
 ==== ==== ==== ==== ==== ====
-VI_art_0_50_01.txt , 35, VI_art_0_50_01_mau.txt , 35, 100.0 %, connguoi, VI_gg_1_50_02_mau.txt ,18.666666666666668
-VI_gg_0_50_01.txt , 33, VI_gg_0_50_01_mau.txt , 35, 95.87977 %, google, VI_gg_1_50_02_mau.txt ,18.666666666666668
+Đầu ra, Số chữ đầu ra, Đầu vào, Số chữ đầu vào, Tác nhân, Số giây của video, Kết quả 
+VI_art_0_50_01.txt , 35, VI_art_0_50_01_mau.txt , 35, connguoi, 558.00s, 100.0%
+VI_gg_0_50_01.txt , 33, VI_gg_0_50_01_mau.txt , 35, google, 27.36s, 95.87977%
 
 => Tổng số có 2 file đã thực thi 
-=> Thời gian thực thi: 0:00:00.006627
+=> Thời gian thực thi: 0:00:01.509600
