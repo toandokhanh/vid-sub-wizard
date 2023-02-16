@@ -36,10 +36,9 @@ args = parser.parse_args()
 
 path = ''
 path2 = ''
+
 try:
 # File train
-
-
 
     path = args.train + '/'
     train_files =[doc for doc in os.listdir(path) if (doc.endswith('.txt') )]
@@ -49,15 +48,12 @@ try:
     compare_videos =[doc for doc in os.listdir(path2) if (doc.endswith('.mp4') )]
     # Lấy danh sách tất cả các tập tin trong thư mục
 
-    
 except:
     print("")
 
 
 # File so sanh
 # path2 = "train/"
-
-
 
 
 # for file in student_files:
@@ -93,6 +89,9 @@ def check_similarity(file1,file2):
     result = similarity(vector[0],vector[1])[0][1]
     return round(result*100,5)
 
+
+
+
 if __name__ == "__main__":
 # print(check_similarity('train/tong.txt','fileSoSanh/tong_mau.txt'))
 # tạo file luu ket qua trong thư mục fileKetQua
@@ -104,7 +103,7 @@ if __name__ == "__main__":
     dateVN = today.strftime("%d-%m-%Y")
     file_log =args.train + '_' + args.file_origin
     file_log = file_log.replace('/', '---')
-    print(file_log)
+    # print(file_log)
     f = open('result/'+str(file_log)+'.txt', 'w',encoding = 'utf-8')
     #f = open('result/result.txt', 'w',encoding = 'utf-8')
     
@@ -113,8 +112,20 @@ if __name__ == "__main__":
     f.write("Đầu ra, Số chữ đầu ra, Đầu vào, Số chữ đầu vào, Tác nhân, Số giây của video, Kết quả \n")
     result = []
     i=0
-
     arrayTimes = [];    
+
+
+    # kiểm tra tham số video
+    result_algorithm = '';
+    if "Normal" in file_log:
+        result_algorithm = ('Kết quả phụ đề video không có tiếng ồn')
+    elif "noise" in file_log:
+        result_algorithm = ('Kết quả phụ đề giải thuật giảm tiếng ồn Noisereduce')
+    elif "deep" in file_log:
+        result_algorithm = ('Kết quả phụ đề giải thuật giảm tiếng ồn DeepFilter')
+    else:
+        result_algorithm = ('Kết quả phụ đề không xác định')
+    
     for compare_video in compare_videos:
         
         video = cv2.VideoCapture(os.path.join(path2, compare_video))
@@ -139,6 +150,7 @@ if __name__ == "__main__":
         file2_words = count_words(file2)
         # print(f"{file1}   : {file1_words}")
         # print(f"{file2}   : {file2_words}")
+
 # kiem tra tac nhan
         if "art" in file2:
             tacnhan = "connguoi"
@@ -162,17 +174,13 @@ if __name__ == "__main__":
             f.write(kq+"\n")
         result.append(kq)
     end_time = datetime.now()
-     
+    f.write(result_algorithm)
     f.write('\n=> Tổng số có {} file đã thực thi '.format(i))
     f.write('\n=> Thời gian thực thi: '+str(end_time - start_time))
-    
-
 
 
 # tachfile = s_vectors[-1][0].split(".")
 # f = open( "fileKetQua/KetQuaCosine.txt" , 'w',encoding = 'utf-8')
-
-
 
 # #Lưu kết quả vào file
 # f.write("Thực hiện: "+str(time) + " " + str(dateVN) +"\n")

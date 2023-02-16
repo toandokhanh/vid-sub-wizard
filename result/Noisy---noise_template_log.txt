@@ -1,4 +1,4 @@
-Thực hiện: 21h59 14-02-2023
+Thực hiện: 09h45 15-02-2023
 
 ==== ==== ==== ==== ==== ====
 Đầu ra, Số chữ đầu ra, Đầu vào, Số chữ đầu vào, Tác nhân, Số giây của video, Kết quả 
@@ -35,7 +35,7 @@ EN_gg_1_50_01.txt , 52, EN_gg_1_50_01_mau.txt , 52, google, 20.63s, 98.17631%
 EN_gg_1_50_02.txt , 45, EN_gg_1_50_02_mau.txt , 44, google, 17.00s, 94.55179%
 VI_art_0_1000_01.txt , 12, VI_art_0_1000_01_mau.txt , 723, connguoi, 172.77s, 9.08918%
 VI_art_0_1000_02.txt , 17, VI_art_0_1000_02_mau.txt , 664, connguoi, 177.17s, 20.20156%
-VI_art_0_100_01.txt , 0, VI_art_0_100_01_mau.txt , 85, connguoi, 22.53s, 0.0%
+VI_art_0_100_01.txt , 17, VI_art_0_100_01_mau.txt , 85, connguoi, 22.53s, 33.85242%
 VI_art_0_100_02.txt , 18, VI_art_0_100_02_mau.txt , 48, connguoi, 12.73s, 41.03297%
 VI_art_0_300_01.txt , 14, VI_art_0_300_01_mau.txt , 82, connguoi, 26.37s, 31.59055%
 VI_art_0_300_02.txt , 13, VI_art_0_300_02_mau.txt , 144, connguoi, 41.10s, 26.9859%
@@ -74,4 +74,4 @@ VI_gg_1_50_01.txt , 20, VI_gg_1_50_01_mau.txt , 35, google, 58.27s, 68.35971%
 VI_gg_1_50_02.txt , 47, VI_gg_1_50_02_mau.txt , 55, google, 10.57s, 90.19153%
 
 => Tổng số có 70 file đã thực thi 
-=> Thời gian thực thi: 0:00:01.538197
+=> Thời gian thực thi: 0:00:01.579356
