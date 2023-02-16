@@ -81,7 +81,7 @@
 
 #### Tính phần trăm cosine
 
-    python3 sosanh_log -train train -compare fileSoSanh
+    python3 comparison_log -train train -compare template_log
 
 - train: tham số tryền vào là thư mục cần so sánh với file gốc (trong đó train: là thư mục sau khi tạo phụ đề cần so sánh với nội dung gốc)
 
@@ -90,16 +90,21 @@
 
 
 
-#### Cấu trúc thư mục chứa video không có tiếng ồn
+#### Cấu trúc thư mục 
 
-    └───Normal
-        ├───English
-        ├───VietNam
-        │   ├───output
-            ├───├video.mp4
-            ├───├video.srt
-            ├───├video.txt
-            ├───├video.wav
+    └───Normal (ouput của phụ đề video không có tiếng ồn)
+        ├───├video.mp4
+        ├───├video.srt
+        ├───├video.txt
+        ├───├video.wav
+    └───Noisy (thư mục chứa video có tiếng ồn)
+        ├───deep (ouput của phụ đề chạy giải thuật deep)
+        ├───noise (ouput của phụ đề chạy giải thuật noise)
+        ├───not (ouput của phụ đề không có giải thuật)
+        ├───├───├video.mp4 (Video gốc có tiếng ồn)
+    └───template_log (thư mục chứa video và file txt gốc không có tiếng ồn)
+
+
 #### Cách đặt tên file video
     <NgonNgu>_<TacNhan>_<GioiTinh>_<SochuTrongVideo>_<STT>.mp4
 
@@ -120,29 +125,9 @@
     + 500: video chứa từ 500 - 1000 chữ
     + 1000: video chứa từ > 1000 chữ
 - Số thứ tự của video
-
-
-
-
-
-#### Cấu trúc thư mục Noisy và tên video (có tiếng ồn)
-    └───Noisy
-        ├───deep (Thư mục video ouput chạy giải thuật deep)
-        |   ├video.mp4
-        |   ├video.srt
-        |   ├video.txt
-        |   ├video.wav 
-        ├───noise (Thư mục video ouput chạy giải thuật deep)
-        ├   ├video.mp4
-        ├   ├video.srt
-        ├   ├video.txt
-        ├   ├video.wav 
-        ├───no (Thư mục video ouput không có giải thuật)
-        ├   ├video.mp4
-        ├   ├video.srt
-        ├   ├video.txt
-        ├   ├video.wav 
-        ├───video_tieng_on.mp4 (video chưa chạy phụ đề)
+    + 01
+    + 02
+    + 03
              
 #### Cách đặt tên file video có tiếng ồn
     <NgonNgu>_<CongCu>_<GioiTinh>_<SochuTrongVideo>_<GiaiThuatChongTiengOn>_<LoaiTiengOn>_<STT>.mp4

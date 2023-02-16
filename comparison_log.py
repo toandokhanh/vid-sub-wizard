@@ -120,9 +120,11 @@ if __name__ == "__main__":
     if "Normal" in file_log:
         result_algorithm = ('Kết quả phụ đề video không có tiếng ồn')
     elif "noise" in file_log:
-        result_algorithm = ('Kết quả phụ đề giải thuật giảm tiếng ồn Noisereduce')
+        result_algorithm = ('Kết quả phụ đề của video có tiếng ồn dùng giải thuật giảm tiếng ồn Noisereduce')
     elif "deep" in file_log:
-        result_algorithm = ('Kết quả phụ đề giải thuật giảm tiếng ồn DeepFilter')
+        result_algorithm = ('Kết quả phụ đề của video có tiếng ồn dùng giải thuật giảm tiếng ồn DeepFilter')
+    elif "not" in file_log:
+        result_algorithm = ('Kết quả phụ đề video có tiếng ồn không dùng giải thuật giảm tiếng ồn')
     else:
         result_algorithm = ('Kết quả phụ đề không xác định')
     
@@ -172,9 +174,11 @@ if __name__ == "__main__":
             kq = '{} , {}, {} , {}, {}, {}s, {}%'.format(train,file1_words,train[:train.index('.')]+'_mau.txt',file2_words,tacnhan,formatted_array_time,similarity)
             i+=1
             f.write(kq+"\n")
+            
         result.append(kq)
     end_time = datetime.now()
     f.write(result_algorithm)
+    print('Chạy thành công '+result_algorithm)
     f.write('\n=> Tổng số có {} file đã thực thi '.format(i))
     f.write('\n=> Thời gian thực thi: '+str(end_time - start_time))
 
