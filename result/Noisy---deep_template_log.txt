@@ -1,4 +1,4 @@
-Thực hiện: 22h10 14-02-2023
+Thực hiện: 09h46 15-02-2023
 
 ==== ==== ==== ==== ==== ====
 Đầu ra, Số chữ đầu ra, Đầu vào, Số chữ đầu vào, Tác nhân, Số giây của video, Kết quả 
@@ -75,4 +75,4 @@ VI_gg_1_50_01.txt , 35, VI_gg_1_50_01_mau.txt , 35, google, 10.57s, 100.0%
 VI_gg_1_50_02.txt , 55, VI_gg_1_50_02_mau.txt , 55, google, 18.67s, 94.78257%
 
 => Tổng số có 71 file đã thực thi 
-=> Thời gian thực thi: 0:00:01.885948
+=> Thời gian thực thi: 0:00:01.497622

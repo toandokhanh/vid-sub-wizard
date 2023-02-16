@@ -1,4 +1,4 @@
-Thực hiện: 22h15 14-02-2023
+Thực hiện: 08h55 16-02-2023
 
 ==== ==== ==== ==== ==== ====
 Đầu ra, Số chữ đầu ra, Đầu vào, Số chữ đầu vào, Tác nhân, Số giây của video, Kết quả 
@@ -73,6 +73,6 @@ VI_gg_1_500_01.txt , 307, VI_gg_1_500_01_mau.txt , 312, google, 84.83s, 95.1665%
 VI_gg_1_500_02.txt , 200, VI_gg_1_500_02_mau.txt , 202, google, 58.27s, 92.83462%
 VI_gg_1_50_01.txt , 35, VI_gg_1_50_01_mau.txt , 35, google, 10.57s, 100.0%
 VI_gg_1_50_02.txt , 55, VI_gg_1_50_02_mau.txt , 55, google, 18.67s, 87.96354%
-
+Kết quả phụ đề video không có tiếng ồn
 => Tổng số có 71 file đã thực thi 
-=> Thời gian thực thi: 0:00:01.793954
+=> Thời gian thực thi: 0:00:03.053442
