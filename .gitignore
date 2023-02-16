@@ -134,6 +134,6 @@ dmypy.json
 video
 video_minhchung
 template_log
-static
+# static
 Noisy
 Normal
