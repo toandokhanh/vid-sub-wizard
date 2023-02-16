@@ -93,15 +93,15 @@
 #### Cấu trúc thư mục 
 
     └───Normal (ouput của phụ đề video không có tiếng ồn)
-        ├───├video.mp4
-        ├───├video.srt
-        ├───├video.txt
-        ├───├video.wav
+        ├───video.mp4
+        ├───video.srt
+        ├───video.txt
+        ├───video.wav
     └───Noisy (thư mục chứa video có tiếng ồn)
         ├───deep (ouput của phụ đề chạy giải thuật deep)
         ├───noise (ouput của phụ đề chạy giải thuật noise)
         ├───not (ouput của phụ đề không có giải thuật)
-        ├───├───├video.mp4 (Video gốc có tiếng ồn)
+            ├───video.mp4 (Video gốc có tiếng ồn)
     └───template_log (thư mục chứa video và file txt gốc không có tiếng ồn)
 
 
