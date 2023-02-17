@@ -1,9 +1,7 @@
-Thực hiện: 09h00 16-02-2023
+Thực hiện: 22h41 17-02-2023
 
 ==== ==== ==== ==== ==== ====
 Đầu ra, Số chữ đầu ra, Đầu vào, Số chữ đầu vào, Tác nhân, Số giây của video, Kết quả 
-VI_art_0_50_01.txt , 35, VI_art_0_50_01_mau.txt , 35, connguoi, 558.00s, 100.0%
-VI_gg_0_50_01.txt , 33, VI_gg_0_50_01_mau.txt , 35, google, 27.36s, 95.87977%
 Kết quả phụ đề video có tiếng ồn không dùng giải thuật giảm tiếng ồn
-=> Tổng số có 2 file đã thực thi 
-=> Thời gian thực thi: 0:00:01.311670
+=> Tổng số có 0 file đã thực thi 
+=> Thời gian thực thi: 0:00:01.313768
