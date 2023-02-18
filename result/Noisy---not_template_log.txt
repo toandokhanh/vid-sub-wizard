@@ -1,7 +1,78 @@
-Thực hiện: 22h41 17-02-2023
+Thực hiện: 23h33 17-02-2023
 
 ==== ==== ==== ==== ==== ====
 Đầu ra, Số chữ đầu ra, Đầu vào, Số chữ đầu vào, Tác nhân, Số giây của video, Kết quả 
+EN_art_0_1000_01.txt , 734, EN_art_0_1000_01_mau.txt , 1216, connguoi, 558.00s, 94.47562%
+EN_art_0_100_01.txt , 51, EN_art_0_100_01_mau.txt , 60, connguoi, 27.36s, 91.30543%
+EN_art_0_100_02.txt , 50, EN_art_0_100_02_mau.txt , 84, connguoi, 32.73s, 90.45896%
+EN_art_0_300_01.txt , 14, EN_art_0_300_01_mau.txt , 288, connguoi, 117.53s, 59.56384%
+EN_art_0_300_02.txt , 126, EN_art_0_300_02_mau.txt , 177, connguoi, 88.67s, 81.10005%
+EN_art_0_500_01.txt , 4, EN_art_0_500_01_mau.txt , 667, connguoi, 254.73s, 27.68794%
+EN_art_0_50_01.txt , 0, EN_art_0_50_01_mau.txt , 52, connguoi, 18.90s, 0.0%
+EN_art_0_50_02.txt , 38, EN_art_0_50_02_mau.txt , 44, connguoi, 15.50s, 76.98047%
+EN_art_1_100_01.txt , 4, EN_art_1_100_01_mau.txt , 60, connguoi, 25.27s, 13.59863%
+EN_art_1_100_02.txt , 3, EN_art_1_100_02_mau.txt , 84, connguoi, 37.37s, 13.70267%
+EN_art_1_300_01.txt , 245, EN_art_1_300_01_mau.txt , 288, connguoi, 186.68s, 89.17579%
+EN_art_1_300_02.txt , 0, EN_art_1_300_02_mau.txt , 177, connguoi, 75.27s, 0.0%
+EN_art_1_500_01.txt , 1, EN_art_1_500_01_mau.txt , 667, connguoi, 240.30s, 0.0%
+EN_art_1_50_01.txt , 0, EN_art_1_50_01_mau.txt , 52, connguoi, 22.87s, 0.0%
+EN_art_1_50_02.txt , 0, EN_art_1_50_02_mau.txt , 44, connguoi, 20.83s, 0.0%
+EN_gg_0_1000_01.txt , 228, EN_gg_0_1000_01_mau.txt , 1216, google, 476.77s, 83.42616%
+EN_gg_0_100_01.txt , 45, EN_gg_0_100_01_mau.txt , 60, google, 31.86s, 87.46242%
+EN_gg_0_100_02.txt , 19, EN_gg_0_100_02_mau.txt , 84, google, 31.37s, 59.68714%
+EN_gg_0_300_01.txt , 0, EN_gg_0_300_01_mau.txt , 288, google, 97.00s, 0.0%
+EN_gg_0_300_02.txt , 57, EN_gg_0_300_02_mau.txt , 177, google, 71.23s, 53.55979%
+EN_gg_0_500_01.txt , 2, EN_gg_0_500_01_mau.txt , 667, google, 239.33s, 5.43819%
+EN_gg_0_50_01.txt , 7, EN_gg_0_50_01_mau.txt , 52, google, 21.97s, 35.96418%
+EN_gg_0_50_02.txt , 15, EN_gg_0_50_02_mau.txt , 44, google, 18.93s, 50.7229%
+EN_gg_1_1000_01.txt , 520, EN_gg_1_1000_01_mau.txt , 1216, google, 555.37s, 94.37955%
+EN_gg_1_100_01.txt , 30, EN_gg_1_100_01_mau.txt , 60, google, 33.28s, 68.90606%
+EN_gg_1_100_02.txt , 43, EN_gg_1_100_02_mau.txt , 84, google, 38.07s, 87.47351%
+EN_gg_1_300_01.txt , 0, EN_gg_1_300_01_mau.txt , 288, google, 99.03s, 0.0%
+EN_gg_1_300_02.txt , 130, EN_gg_1_300_02_mau.txt , 177, google, 78.97s, 85.5222%
+EN_gg_1_500_01.txt , 5, EN_gg_1_500_01_mau.txt , 667, google, 354.33s, 49.31388%
+EN_gg_1_50_01.txt , 27, EN_gg_1_50_01_mau.txt , 52, google, 20.63s, 68.24155%
+EN_gg_1_50_02.txt , 5, EN_gg_1_50_02_mau.txt , 44, google, 17.00s, 43.19665%
+VI_art_0_1000_01.txt , 100, VI_art_0_1000_01_mau.txt , 723, connguoi, 172.77s, 66.72205%
+VI_art_0_1000_02.txt , 175, VI_art_0_1000_02_mau.txt , 664, connguoi, 177.17s, 72.02973%
+VI_art_0_100_01.txt , 10, VI_art_0_100_01_mau.txt , 85, connguoi, 22.53s, 19.44041%
+VI_art_0_100_02.txt , 34, VI_art_0_100_02_mau.txt , 48, connguoi, 12.73s, 65.75014%
+VI_art_0_300_01.txt , 23, VI_art_0_300_01_mau.txt , 82, connguoi, 26.37s, 62.70769%
+VI_art_0_300_02.txt , 27, VI_art_0_300_02_mau.txt , 144, connguoi, 41.10s, 35.92989%
+VI_art_0_500_01.txt , 146, VI_art_0_500_01_mau.txt , 312, connguoi, 80.23s, 80.37413%
+VI_art_0_500_02.txt , 73, VI_art_0_500_02_mau.txt , 202, connguoi, 51.37s, 64.47124%
+VI_art_0_50_01.txt , 35, VI_art_0_50_01_mau.txt , 35, connguoi, 9.17s, 100.0%
+VI_art_0_50_02.txt , 0, VI_art_0_50_02_mau.txt , 55, connguoi, 20.70s, 0.0%
+VI_art_1_1000_01.txt , 671, VI_art_1_1000_01_mau.txt , 723, connguoi, 339.27s, 96.28539%
+VI_art_1_1000_02.txt , 665, VI_art_1_1000_02_mau.txt , 664, connguoi, 277.24s, 95.95818%
+VI_art_1_100_01.txt , 76, VI_art_1_100_01_mau.txt , 85, connguoi, 33.80s, 79.08459%
+VI_art_1_100_02.txt , 46, VI_art_1_100_02_mau.txt , 48, connguoi, 18.79s, 83.49302%
+VI_art_1_300_01.txt , 82, VI_art_1_300_01_mau.txt , 82, connguoi, 34.33s, 97.91521%
+VI_art_1_300_02.txt , 145, VI_art_1_300_02_mau.txt , 144, connguoi, 59.93s, 85.10228%
+VI_art_1_500_01.txt , 295, VI_art_1_500_01_mau.txt , 312, connguoi, 131.34s, 95.76021%
+VI_art_1_500_02.txt , 203, VI_art_1_500_02_mau.txt , 202, connguoi, 93.28s, 90.91127%
+VI_art_1_50_01.txt , 37, VI_art_1_50_01_mau.txt , 35, connguoi, 12.27s, 84.99155%
+VI_art_1_50_02.txt , 26, VI_art_1_50_02_mau.txt , 55, connguoi, 16.47s, 57.80019%
+VI_gg_0_1000_01.txt , 348, VI_gg_0_1000_01_mau.txt , 723, google, 218.57s, 89.556%
+VI_gg_0_1000_02.txt , 553, VI_gg_0_1000_02_mau.txt , 664, google, 179.07s, 95.41003%
+VI_gg_0_100_01.txt , 57, VI_gg_0_100_01_mau.txt , 85, google, 35.73s, 76.46667%
+VI_gg_0_100_02.txt , 26, VI_gg_0_100_02_mau.txt , 48, google, 16.97s, 66.64988%
+VI_gg_0_300_01.txt , 50, VI_gg_0_300_01_mau.txt , 82, google, 31.63s, 78.85611%
+VI_gg_0_300_02.txt , 95, VI_gg_0_300_02_mau.txt , 144, google, 45.00s, 80.42458%
+VI_gg_0_500_01.txt , 188, VI_gg_0_500_01_mau.txt , 312, google, 102.77s, 90.12408%
+VI_gg_0_500_02.txt , 53, VI_gg_0_500_02_mau.txt , 202, google, 63.83s, 57.90955%
+VI_gg_0_50_01.txt , 33, VI_gg_0_50_01_mau.txt , 35, google, 10.77s, 95.87977%
+VI_gg_0_50_02.txt , 37, VI_gg_0_50_02_mau.txt , 55, google, 18.57s, 84.18152%
+VI_gg_1_1000_01.txt , 648, VI_gg_1_1000_01_mau.txt , 723, google, 180.70s, 96.85757%
+VI_gg_1_1000_02.txt , 634, VI_gg_1_1000_02_mau.txt , 664, google, 190.10s, 96.95477%
+VI_gg_1_100_01.txt , 48, VI_gg_1_100_01_mau.txt , 85, google, 24.87s, 66.87914%
+VI_gg_1_100_02.txt , 22, VI_gg_1_100_02_mau.txt , 48, google, 13.70s, 59.13927%
+VI_gg_1_300_01.txt , 77, VI_gg_1_300_01_mau.txt , 82, google, 26.13s, 93.4564%
+VI_gg_1_300_02.txt , 110, VI_gg_1_300_02_mau.txt , 144, google, 39.87s, 86.60163%
+VI_gg_1_500_01.txt , 294, VI_gg_1_500_01_mau.txt , 312, google, 84.83s, 97.45836%
+VI_gg_1_500_02.txt , 165, VI_gg_1_500_02_mau.txt , 202, google, 58.27s, 90.87969%
+VI_gg_1_50_01.txt , 20, VI_gg_1_50_01_mau.txt , 35, google, 10.57s, 68.35971%
+VI_gg_1_50_02.txt , 46, VI_gg_1_50_02_mau.txt , 55, google, 18.67s, 92.36482%
 Kết quả phụ đề video có tiếng ồn không dùng giải thuật giảm tiếng ồn
-=> Tổng số có 0 file đã thực thi 
-=> Thời gian thực thi: 0:00:01.313768
+=> Tổng số có 71 file đã thực thi 
+=> Thời gian thực thi: 0:00:02.787212

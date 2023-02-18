@@ -90,7 +90,7 @@
 
 
 
-#### Cấu trúc thư mục 
+#### Cấu trúc thư mục  
 
     └───Normal (ouput của phụ đề video không có tiếng ồn)
         ├───video.mp4
