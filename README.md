@@ -19,7 +19,7 @@
 
 #### Thay lại tên csdl:
 
-- app.config['MYSQL_DATABASE_DB']='ten csdl mới'
+- app.config['MYSQL_DATABASE_DB']= 'ten csdl mới'
 
 - Database: phude.sql
 
