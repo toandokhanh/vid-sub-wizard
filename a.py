@@ -1,4 +1,4 @@
-# filename = "count.txt"
+# filename = "count"
 # with open(filename, "r") as file:
 #     lines = file.readlines()
 #     count = len(lines)
@@ -56,3 +56,6 @@ for file in files:
 
         # Giải phóng tài nguyên
         video.release()
+
+
+
