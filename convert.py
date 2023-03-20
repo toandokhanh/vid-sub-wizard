@@ -15,14 +15,6 @@ def write_file(filename,txt):
 
 
 
-
-
-
-
-
-
-
-
 def handleFile(path,lang='vi'):
     # Đọc file
     a = readfile(path)

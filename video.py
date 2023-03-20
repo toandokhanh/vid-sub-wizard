@@ -26,7 +26,7 @@ mysql = MySQL()
 
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD']= ''
-app.config['MYSQL_DATABASE_DB']='phude'
+app.config['MYSQL_DATABASE_DB']='subtitle'
 app.config['MYSQL_DATABASE_HOST']='localhost'
 mysql.init_app(app)
 
@@ -38,11 +38,6 @@ mysql.init_app(app)
 # dateVN = today.strftime("%d-%m-%Y")
 
 # days = f'{time}- {dateVN}'
-
-
-
-
-
 
 
 # Get number data of database
@@ -68,8 +63,6 @@ def check_dk():
         if u:
             user_list.append(u['username'])
     return user_list
-
-
 
 def check_name():
     user = session['user']
@@ -124,6 +117,7 @@ def login():
     return render_template('login.html')
 @app.route('/dangky',methods=['POST','GET'])
 def dang_ky():
+    
     if "user" in session:
         return redirect(url_for('login'))
     if request.method == 'POST':
@@ -151,7 +145,6 @@ def dang_ky():
 
         
     return render_template('dangky.html')
-
 
 def login(err):
     return render_template("login.html",err)
@@ -263,8 +256,17 @@ def index():
         time_xuly = round(float(end_time-start_time),2)
         
         # print(str(end_time - start_time))
+        # Kiểm tra file có tồn tại hay không
+        if os.path.isfile(f"t2/{newname}.txt"):
+            # Nếu có, đọc toàn bộ nội dung từ file và gán cho biến text
+            with open(f"t2/{newname}.txt", "r") as f:
+                text = f.read()
+                print(text)
+        else:
+            # Nếu không tìm thấy file, in ra thông báo lỗi
+            print("File not found.")
         cursor1 = conn.cursor(pymysql.cursors.DictCursor)
-        cursor1.execute("INSERT INTO ketquataophude(name_video,username,ma_gt,ma_nn_input,ma_nn_output,thoigianxuly,output_srt,output_mp4) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)",(filename,user,choose_algorithm,language_in,language_out,time_xuly,newname+'.srt',newname+'.mp4'))
+        cursor1.execute("INSERT INTO ketquataophude(name_video,username,ma_gt,ma_nn_input,ma_nn_output,thoigianxuly,output_srt,output_mp4,output_txt) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)",(filename,user,choose_algorithm,language_in,language_out,time_xuly,newname+'.srt',newname+'.mp4',text))
         # userlist = cursor1.fetchall()
         conn.commit()
         # if os.path.exists(PATH):
@@ -291,7 +293,7 @@ def loading(filename):
     historys = cursor3.fetchall()
     PATH = app.config['UPLOAD_FOLDER']
     SOURCE =app.config['VIDEO']
-    # flash(filename)
+    flash(filename)
     redirect(url_for("loading",filename=PATH+filename),code=301)
     if historys:
         lang_in = historys[0]['ma_nn_input']

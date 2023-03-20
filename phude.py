@@ -25,7 +25,7 @@ parser.add_argument('-noise','--algorithm_noise',help="---> Chọn thuật toán
 parser.add_argument('-n','--new_name',help="---> Đặt lại với tên mới")
 args = parser.parse_args()
 
-
+# python3 phude.py 'url' -s ngonnguvao -d ngonngudich -n tenmoi -noise chongiaithuat
 
 
 
