@@ -288,7 +288,7 @@ def loading(filename):
     conn = mysql.connect()
     cursor3 = conn.cursor(pymysql.cursors.DictCursor)
     name = filename[:filename.index('.mp4')]
-   
+
     cursor3.execute("SELECT * FROM ketquataophude WHERE username=%s and output_mp4=%s",(user,filename) )
     historys = cursor3.fetchall()
     PATH = app.config['UPLOAD_FOLDER']
@@ -309,9 +309,26 @@ def loading(filename):
             else:
                 srt = (filename[:filename.index(".mp4")]+'_translated.srt')
                 return send_from_directory(app.config['SOURCE'],srt,as_attachment=True)
+    lang_in = historys[0]['ma_nn_input']
+    lang_out = historys[0]['ma_nn_output']
+    if lang_in == lang_out:
+        srt_name = (filename[:filename.index(".mp4")]+'.srt')
+    else:
+        srt_name = (filename[:filename.index(".mp4")]+'_translated.srt')
     
+    import codecs
 
-    return render_template("loading.html",down=down,filename=SOURCE+filename)
+    srt_path = os.path.join('static', 'video', srt_name)
+    render_srt = ''
+
+    if os.path.exists(srt_path):
+        with codecs.open(srt_path, 'r', 'utf-8') as f:
+            render_srt = f.read()
+    else:
+        print(f'File {srt_path} does not exist.')
+
+    print(render_srt)
+    return render_template("loading.html",down=down,filename=SOURCE+filename, render_srt=render_srt)
 
 
 @app.route("/dangxuat")
