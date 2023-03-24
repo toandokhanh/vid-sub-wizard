@@ -57,6 +57,7 @@ CREATE TABLE `ketquataophude` (
   `thoigianxuly` varchar(50) NOT NULL,
   `output_srt` varchar(50) NOT NULL,
   `output_mp4` varchar(50) NOT NULL
+  `output_txt` varchar(50)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -183,7 +184,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`) VALUES
-('nguyentong2k', '202cb962ac59075b964b07152d234b70'),
+('toan', '202cb962ac59075b964b07152d234b70'),
 ('tong', '202cb962ac59075b964b07152d234b70'),
 ('tong2', '81dc9bdb52d04dc20036dbd8313ed055');
 

@@ -9,6 +9,8 @@ let dangki = document.querySelector(".dangky");
 let change = document.querySelector(".change");
 flash = document.querySelector(".flash");
 
+
+
 window.onload = () => {
   if (flash) {
     setTimeout(() => {
@@ -74,4 +76,18 @@ if (change) {
       }
     }
   };
+}
+
+
+const createSRT = () => {
+  var rows = document.querySelectorAll('#keywords tbody tr');
+  var subtitles = [];
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i];
+    var startTime = row.cells[0].innerText;
+    var endTime = row.cells[1].innerText;
+    var text = row.cells[2].getElementsByTagName('textarea')[0].value;
+    subtitles.push({'start_time': startTime, 'end_time': endTime, 'text': text});
+    console.log(subtitles);
+  }
 }

@@ -21,43 +21,45 @@
     >
   </div>
   {% endif %} {% if quantity > 0 %}
-  <h3 class="mb-10">Lịch sử tạo phụ đề</h3>
-  <h1>Hiện tại có {{quantity}} video đã tạo phụ đề</h1>
+  <h1 class="mb-10">Lịch sử tạo phụ đề</h1>
+  <h3>Hiện tại có {{quantity}} video đã tạo phụ đề</h3>
 
   <div class="history">
-    <table border="1">
-      <thead>
-        <tr>
-          <th>Tên video</th>
-          <th>Ngôn ngữ</th>
-          <th>Ngày upload</th>
-          <th>Xem</th>
-          <th>Xoá</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for file in data %}
-
-        <tr>
-          <td class="file_srt">{{file['output_mp4']}}</td>
-          <td class="text-center">
-            {{file['ma_nn_input']}} / {{file['ma_nn_output']}}
-          </td>
-          <td>{{file['ngay_up']}}</td>
-          <th style="cursor: pointer">
-            <a class="view_srt" href="loading/{{file['output_mp4']}}"
-              >Xem <i class="fa fa-eye" aria-hidden="true"></i
-            ></a>
-          </th>
-          <th style="cursor: pointer">
-            <a class="delete_srt" data-name="{{file['output_mp4']}}"
-              >Xoá <i class="fa fa-remove" aria-hidden="true"></i
-            ></a>
-          </th>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div id="wrapper">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Tên video</th>
+            <th>Ngôn ngữ</th>
+            <th>Ngày upload</th>
+            <th>Xem</th>
+            <th>Xoá</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for file in data %}
+  
+          <tr>
+            <td class="file_srt">{{file['output_mp4']}}</td>
+            <td class="text-center">
+              {{file['ma_nn_input']}} / {{file['ma_nn_output']}}
+            </td>
+            <td>{{file['ngay_up']}}</td>
+            <th style="cursor: pointer">
+              <a class="view_srt" href="loading/{{file['output_mp4']}}"
+                >Xem <i class="fa fa-eye" aria-hidden="true"></i
+              ></a>
+            </th>
+            <th style="cursor: pointer">
+              <a class="delete_srt" data-name="{{file['output_mp4']}}"
+                >Xoá <i class="fa fa-remove" aria-hidden="true"></i
+              ></a>
+            </th>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
   {% else %}
   <h3 class="empty">

@@ -326,9 +326,19 @@ def loading(filename):
             render_srt = f.read()
     else:
         print(f'File {srt_path} does not exist.')
-
-    print(render_srt)
-    return render_template("loading.html",down=down,filename=SOURCE+filename, render_srt=render_srt)
+    import pysrt
+    srt_path = os.path.join('static', 'video', srt_name)
+        # Mở file SRT và trích xuất thông tin về thời gian và nội dung phụ đề
+    subs = pysrt.open(srt_path)
+    subtitles = []
+    for sub in subs:
+        start_time = sub.start.to_time()
+        end_time = sub.end.to_time()
+        text = sub.text
+        subtitles.append({'start_time': start_time, 'end_time': end_time, 'text': text})
+    # Render thông tin về thời gian và nội dung phụ đề thành HTML
+    count = 0
+    return render_template("loading.html",down=down,filename=SOURCE+filename, srt_name=SOURCE+srt_name,subtitles=subtitles,count=count)
 
 
 @app.route("/dangxuat")
@@ -396,7 +406,45 @@ def xoa(filename):
     flash("File {} được xoá thành công".format(filename))
     return redirect(url_for('lichsu'))
 
+# 24/3
+# @app.route('/update-subtitle', methods=['POST'])
+# def update_subtitle():
+#     srt_name = request.form['srt_name']
+#     for key in request.form:
+#         if key.startswith('text_'):
+#             # Xử lý thông tin về thời gian và nội dung phụ đề tương ứng với key này
+            
+#     # Lưu thông tin phụ đề vào file srt
+
+#     return redirect(url_for('index'))
+@app.route('/update-subtitles', methods=['POST'])
+def update_subtitles():
+    import pysrt
+    srt_name = request.form.get('srt_name')
+    subs = pysrt.open(os.path.join('static', 'video', srt_name))
+    for sub in subs:
+        text_key = 'text_{}'.format(sub.index)
+        if text_key in request.form:
+            sub.text = request.form[text_key]
+            new_srt_name = 'srt_new.srt'
+            file_path = os.path.join('static', 'video', new_srt_name)
+            if file_path is not None:
+                subs.save(file_path, encoding='utf-8')
+            else:
+                print("Lỗi: đường dẫn tới file là None.")
+
+    return 'Đã cập nhật phụ đề mới và lưu vào thư mục gốc với tên {}'.format(new_srt_name)
+
+@app.route("/test",methods = ["POST","GET"])
+def test():
+        
+    return render_template('test.html')
 #
 if __name__ == "__main__":
     # app.run(debug=True)
-    app.run(debug=True,host='127.0.0.1',port=5003)
+    app.run(debug=True,host='127.0.0.1',port=5003)\
+    
+
+
+
+    
