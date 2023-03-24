@@ -17,10 +17,19 @@
     Đăng xuất</a
   >
 </div>
-{% endif %} {% with messages = get_flashed_messages() %} {% if messages %}
-{{messages[2]}} {% endif %} {% endwith %}
-<div class="center">
-  <video width="600" height="240" controls>
+  {% endif %} {% with messages = get_flashed_messages() %} {% if messages %}
+  {{messages[2]}} {% endif %} {% endwith %}
+<br>
+<br>
+
+<div class="container">
+  <div class="left">
+  <div style="border: 3px solid black; width: max; height: max;">{{ render_srt }}</div>
+  <button class="change"></button>
+  </div>
+  
+<div class="right">
+  <video style="border: 3px solid black;" width="860" height="530" controls>
     <source src={{url_for('static',filename=filename) }} type="video/mp4" />
   </video>
   <a class="change" style="cursor: pointer" data-name={{filename}} data-nn={{session['nn']}}>
@@ -31,5 +40,6 @@
   </form>
   <!-- <div style="color: red">{{session['nn']}}</div> -->
  
+</div>
 </div>
 {% endblock %}
