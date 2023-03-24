@@ -57,6 +57,7 @@ CREATE TABLE `ketquataophude` (
   `thoigianxuly` varchar(50) NOT NULL,
   `output_srt` varchar(50) NOT NULL,
   `output_mp4` varchar(50) NOT NULL
+  `output_txt` varchar(50)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

@@ -24,22 +24,46 @@
 
 <div class="container">
   <div class="left">
-  <div style="border: 3px solid black; width: max; height: max;">{{ render_srt }}</div>
-  <button class="change"></button>
+    <div id="wrapper" style="border: 3px solid black;"">
+      <!-- <form action="" method="POST"> -->
+        <table id="keywords" cellspacing="0" cellpadding="0">
+          <thead>
+            <tr>
+              <th>Thời gian bắt đầu</th>
+              <th>Thời gian kết thúc</th>
+              <th>Văn bản</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for sub in subtitles %}
+            {% set count = count + 1 %}
+            <tr>
+              <td>{{ sub.start_time }}</td>
+              <td>{{ sub.end_time }}</td>
+              <td>
+                <textarea rows="2" cols="30" name="text_{{ loop.index }}" required contenteditable>{{ sub.text }}</textarea>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <button onclick="createSRT()" type="submit">Cập nhật phụ đề</button>
+      <!-- </form>  -->
   </div>
-  
+  <form method="POST" enctype="multipart/form-data">
+    {{down.hidden_tag()}} {{down.submit2()}}
+  </form> 
+  </div>
 <div class="right">
   <video style="border: 3px solid black;" width="860" height="530" controls>
     <source src={{url_for('static',filename=filename) }} type="video/mp4" />
+    <!-- <track src="../static/video/denvau-ouput.srt" srclang="vi" label="English" kind="subtitles"> -->
   </video>
   <a class="change" style="cursor: pointer" data-name={{filename}} data-nn={{session['nn']}}>
     Chuyển video sang ngôn ngữ gốc
   </a>
-  <form method="POST" enctype="multipart/form-data">
-    {{down.hidden_tag()}} {{down.submit2()}}
-  </form>
+
   <!-- <div style="color: red">{{session['nn']}}</div> -->
- 
 </div>
 </div>
 {% endblock %}
