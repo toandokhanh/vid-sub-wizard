@@ -25,30 +25,28 @@
 <div class="container">
   <div class="left">
     <div id="wrapper" style="border: 3px solid black;"">
-      <!-- <form action="" method="POST"> -->
+      <form action="{{ url_for('create_srt', filename=filename.split("/")[-1]) }}" method="POST"> 
         <table id="keywords" cellspacing="0" cellpadding="0">
-          <thead>
-            <tr>
-              <th>Thời gian bắt đầu</th>
-              <th>Thời gian kết thúc</th>
-              <th>Văn bản</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for sub in subtitles %}
-            {% set count = count + 1 %}
-            <tr>
-              <td>{{ sub.start_time }}</td>
-              <td>{{ sub.end_time }}</td>
-              <td>
-                <textarea rows="2" cols="30" name="text_{{ loop.index }}" required contenteditable>{{ sub.text }}</textarea>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
+            <thead>
+                <tr>
+                    <th>Thời gian bắt đầu</th>
+                    <th>Thời gian kết thúc</th>
+                    <th>Văn bản</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sub in subtitles %}
+                <tr>
+                    <td><input type="text" name="start_{{ loop.index }}" value="{{ sub.start_time.strftime('%H:%M:%S,%f') }}" readonly></td>
+                    <td><input type="text" name="end_{{ loop.index }}" value="{{ sub.end_time.strftime('%H:%M:%S,%f') }}" readonly></td>
+                    <td><textarea rows="2" cols="30" name="text_{{ loop.index }}" required>{{ sub.text }}</textarea></td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
-        <button onclick="createSRT()" type="submit">Cập nhật phụ đề</button>
-      <!-- </form>  -->
+        <input type="text" name="name_srt" value="{{ srt_name }}" hidden>
+        <button type="submit">filename:{{ filename }}</button>
+    </form>    
   </div>
   <form method="POST" enctype="multipart/form-data">
     {{down.hidden_tag()}} {{down.submit2()}}
@@ -60,7 +58,7 @@
     <!-- <track src="../static/video/denvau-ouput.srt" srclang="vi" label="English" kind="subtitles"> -->
   </video>
   <a class="change" style="cursor: pointer" data-name={{filename}} data-nn={{session['nn']}}>
-    Chuyển video sang ngôn ngữ gốc
+    srt_name: {{ srt_name }}
   </a>
 
   <!-- <div style="color: red">{{session['nn']}}</div> -->
