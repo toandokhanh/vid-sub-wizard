@@ -9,8 +9,9 @@ import os
 import shutil
 import hashlib
 import time
-
-
+import pysrt
+import codecs
+import sqlite3
 from io import BytesIO
 from datetime import datetime
 
@@ -316,7 +317,6 @@ def loading(filename):
     else:
         srt_name = (filename[:filename.index(".mp4")]+'_translated.srt')
     
-    import codecs
 
     srt_path = os.path.join('static', 'video', srt_name)
     render_srt = ''
@@ -326,19 +326,17 @@ def loading(filename):
             render_srt = f.read()
     else:
         print(f'File {srt_path} does not exist.')
-    import pysrt
+    
     srt_path = os.path.join('static', 'video', srt_name)
         # Mở file SRT và trích xuất thông tin về thời gian và nội dung phụ đề
     subs = pysrt.open(srt_path)
     subtitles = []
-    for sub in subs:
+    for sub in subs:    
         start_time = sub.start.to_time()
         end_time = sub.end.to_time()
         text = sub.text
         subtitles.append({'start_time': start_time, 'end_time': end_time, 'text': text})
-    # Render thông tin về thời gian và nội dung phụ đề thành HTML
-    count = 0
-    return render_template("loading.html",down=down,filename=SOURCE+filename, srt_name=SOURCE+srt_name,subtitles=subtitles,count=count)
+    return render_template("loading.html",down=down,filename=SOURCE+filename,subtitles=subtitles,srt_name=srt_name)
 
 
 @app.route("/dangxuat")
@@ -419,7 +417,7 @@ def xoa(filename):
 #     return redirect(url_for('index'))
 @app.route('/update-subtitles', methods=['POST'])
 def update_subtitles():
-    import pysrt
+
     srt_name = request.form.get('srt_name')
     subs = pysrt.open(os.path.join('static', 'video', srt_name))
     for sub in subs:
@@ -435,9 +433,70 @@ def update_subtitles():
 
     return 'Đã cập nhật phụ đề mới và lưu vào thư mục gốc với tên {}'.format(new_srt_name)
 
+
+@app.route("/create-srt/<filename>", methods=["POST"])
+    
+def create_srt(filename):
+    
+    srt_name = request.form.get('name_srt')
+    path_srt = os.path.join('static','video',srt_name)
+    # Kiểm tra và xóa file nếu đã tồn tại   
+    if os.path.exists(path_srt):
+        os.remove(path_srt) # xoa bỏ nếu tồn tại
+
+    with codecs.open(path_srt, 'w', encoding='utf-8') as f:
+        for i in range(len(request.form)//3):
+            start_time = request.form.get(f'start_{i+1}')
+            end_time = request.form.get(f'end_{i+1}')
+            text = request.form.get(f'text_{i+1}')
+            f.write(f'{i+1}\n{start_time} --> {end_time}\n{text}\n\n')
+    subs = pysrt.open(path_srt)
+    subtitles = []
+    for sub in subs:    
+        start_time = sub.start.to_time()
+        end_time = sub.end.to_time()
+        text = sub.text
+        subtitles.append({'start_time': start_time, 'end_time': end_time, 'text': text})
+    # return loading(filename)\
+    # Tạo đối tượng cursor để thao tác với cơ sở dữ liệu
+    conn = mysql.connect()
+    cursor1 = conn.cursor()
+    cursor = conn.cursor()
+    # Thực hiện truy vấn SQL
+    cursor.execute("SELECT name_video FROM ketquataophude WHERE output_srt='" + srt_name + "'")
+    # Lấy kết quả trả về từ truy vấn
+    results = cursor.fetchall()
+
+    # In kết quả ra màn hình
+    for row in results:
+        name_video = row[0]
+    conn.close()
+    path_video = os.path.join('t2',name_video)
+    path_save_video_new = path_srt.replace('.srt', '0.mp4')
+     # Kiểm tra và xóa file nếu đã tồn tại   
+    if os.path.exists(path_save_video_new):
+        os.remove(path_save_video_new) # xoa bỏ nếu tồn tại
+    if os.path.exists(path_video):
+        import subprocess
+        # command = ["ffmpeg", "-i", path_video, "-vf", f"subtitles={path_srt}", "-c:a", "copy", path_save_video_new]
+        command = ["ffmpeg", "-i", path_video, "-i" ,path_srt, "-c:v", "copy", "-c:a", "copy", "-c:s", "mov_text", "-metadata:s:s:0",path_save_video_new]
+        subprocess.run(command)
+
+    
+    return loading(filename)
+
+
+
+
+
+
+
 @app.route("/test",methods = ["POST","GET"])
 def test():
-        
+    if request.method == "POST":
+        name = request.form['name']
+        age = request.form['age']
+        return render_template('test.html',name=name, age=age)
     return render_template('test.html')
 #
 if __name__ == "__main__":
