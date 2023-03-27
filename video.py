@@ -462,7 +462,7 @@ def create_srt(filename):
     conn = mysql.connect()
     cursor1 = conn.cursor()
     cursor = conn.cursor()
-    # Thực hiện truy vấn SQL
+    # Thực hiện truy vấn SQLl
     cursor.execute("SELECT name_video FROM ketquataophude WHERE output_srt='" + srt_name + "'")
     # Lấy kết quả trả về từ truy vấn
     results = cursor.fetchall()
@@ -472,17 +472,22 @@ def create_srt(filename):
         name_video = row[0]
     conn.close()
     path_video = os.path.join('t2',name_video)
-    path_save_video_new = path_srt.replace('.srt', '0.mp4')
-     # Kiểm tra và xóa file nếu đã tồn tại   
+    path_save_video_new = path_srt.replace('.srt', '.mp4')
+    # Kiểm tra và xóa file nếu đã tồn tại   
     if os.path.exists(path_save_video_new):
         os.remove(path_save_video_new) # xoa bỏ nếu tồn tại
     if os.path.exists(path_video):
-        import subprocess
-        # command = ["ffmpeg", "-i", path_video, "-vf", f"subtitles={path_srt}", "-c:a", "copy", path_save_video_new]
-        command = ["ffmpeg", "-i", path_video, "-i" ,path_srt, "-c:v", "copy", "-c:a", "copy", "-c:s", "mov_text", "-metadata:s:s:0",path_save_video_new]
-        subprocess.run(command)
+        # path_video -> path dẫn đến video gốc
+        # path_srt -> path dẫn đế file srt_name
+        # path_save_video_new -> path dẫn đến video 
+        os.system(f'ffmpeg -y -i {path_video} -filter_complex "subtitles={path_srt}" {path_save_video_new}')
+        # import subprocess
+        # command = ["  , path_video, "-vf", f"subtitles={path_srt}", "-c:a", "copy", path_save_video_new]
+        # command = ["ffmpeg", "-i", path_video, "-i" ,path_srt, "-c:v", "copy", "-c:a", "copy", "-c:s", "mov_text", "-metadata:s:s:0",path_save_video_new]
+        # subprocess.run(command)
 
     
+    # return render_template('test.html',name=path_video,age=path_srt,a=path_save_video_new)
     return loading(filename)
 
 
