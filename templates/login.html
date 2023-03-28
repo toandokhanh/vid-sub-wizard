@@ -1,30 +1,36 @@
 {% extends "base.html" %} {% block title %} Tạo phụ đề cho video {% endblock %}
 {% block content %} {% with messages = get_flashed_messages() %} {% if messages
 %}
+
+<style>
+  
+</style>
 <ul class="flash">
   <li>{{ messages[0] }}</li>
 </ul>
 {% endif %} {% endwith %}
 <div class="center">
   <div class="login">
-    <h1>Tạo phụ đề cho video</h1>
-    <h2 style="text-align: center; margin-top: 5px; color: #20e3b2">
-      Đăng nhập
+    <!-- <h1>Tạo phụ đề cho video</h1> -->
+    <h2 style="text-align: center; margin: 5px 0; color: #ffffff">
+      Login
     </h2>
-
+    <br>
+    <br>
     <form method="POST" autocomplete="off">
       <div class="form-group">
-        <p>Tên đăng nhập</p>
-        <input type="text" name="username" id="username" required />
+        <!-- <p>Tên đăng nhập</p> -->
+        <input type="text" name="username" id="username" required placeholder="Username"/>
       </div>
       <div class="form-group">
-        <p>Mật khẩu</p>
-        <input type="password" name="password" id="password" required />
+        <!-- <p>Mật khẩu</p> -->
+        <br>
+        <input type="password" name="password" id="password" required  placeholder="Password"/>
       </div>
-      <input type="submit" value="Đăng nhập" name="login" class="dangnhap" />
+      <input style="color: #ffffff; padding: 8px 40px;" type="submit" value="Login" name="login" class="dangnhap" />
     </form>
-    <div class="check">
-      Chưa có tài khoản? <a href="/signup" class="regis">Đăng kí ngay</a>
+    <div class="check" style="font-weight: bold;">
+      Or ?<a href="/signup" class="regis"> Create an Account</a>
     </div>
   </div>
 </div>
