@@ -84,7 +84,9 @@ def check_name():
 
 
 @app.route("/",methods=["GET","POST"])
-
+def home():
+    return render_template('home.html')
+@app.route("/login",methods=["Get","POST"])
 def login():
     if "user" in session:
         return redirect(url_for("index"))
@@ -116,7 +118,7 @@ def login():
     
         
     return render_template('login.html')
-@app.route('/dangky',methods=['POST','GET'])
+@app.route('/signup',methods=['POST','GET'])
 def dang_ky():
     
     if "user" in session:
@@ -145,7 +147,7 @@ def dang_ky():
 
 
         
-    return render_template('dangky.html')
+    return render_template('signup.html')
 
 def login(err):
     return render_template("login.html",err)
