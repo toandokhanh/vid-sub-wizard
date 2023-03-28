@@ -267,7 +267,12 @@ def index():
             # Nếu không tìm thấy file, in ra thông báo lỗi
             print("File not found.")
         cursor1 = conn.cursor(pymysql.cursors.DictCursor)
-        cursor1.execute("INSERT INTO ketquataophude(name_video,username,ma_gt,ma_nn_input,ma_nn_output,thoigianxuly,output_srt,output_mp4,output_txt) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)",(filename,user,choose_algorithm,language_in,language_out,time_xuly,newname+'.srt',newname+'.mp4',text))
+        directory = "static/video/"
+        if os.path.isfile(directory + newname + '_translated.srt'):
+            srt_name = newname + '_translated.srt'
+        else:
+            srt_name = newname + '.srt'
+        cursor1.execute("INSERT INTO ketquataophude(name_video,username,ma_gt,ma_nn_input,ma_nn_output,thoigianxuly,output_srt,output_mp4,output_txt) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)",(filename,user,choose_algorithm,language_in,language_out,time_xuly,srt_name,newname+'.mp4',text))
         # userlist = cursor1.fetchall()
         conn.commit()
         # if os.path.exists(PATH):
@@ -281,6 +286,7 @@ def index():
 @app.route("/loading/<filename>",methods = ["POST","GET"])
 
 def loading(filename):
+    
     if "user" not in session:
         return redirect(url_for("login"))
     if "user" in session:
@@ -336,7 +342,9 @@ def loading(filename):
         end_time = sub.end.to_time()
         text = sub.text
         subtitles.append({'start_time': start_time, 'end_time': end_time, 'text': text})
-    return render_template("loading.html",down=down,filename=SOURCE+filename,subtitles=subtitles,srt_name=srt_name)
+    print('debug')
+    timestamp = int(time.time())
+    return render_template("loading.html",down=down,filename=SOURCE+filename,subtitles=subtitles,srt_name=srt_name, timestamp=timestamp)
 
 
 @app.route("/dangxuat")
@@ -415,23 +423,6 @@ def xoa(filename):
 #     # Lưu thông tin phụ đề vào file srt
 
 #     return redirect(url_for('index'))
-@app.route('/update-subtitles', methods=['POST'])
-def update_subtitles():
-
-    srt_name = request.form.get('srt_name')
-    subs = pysrt.open(os.path.join('static', 'video', srt_name))
-    for sub in subs:
-        text_key = 'text_{}'.format(sub.index)
-        if text_key in request.form:
-            sub.text = request.form[text_key]
-            new_srt_name = 'srt_new.srt'
-            file_path = os.path.join('static', 'video', new_srt_name)
-            if file_path is not None:
-                subs.save(file_path, encoding='utf-8')
-            else:
-                print("Lỗi: đường dẫn tới file là None.")
-
-    return 'Đã cập nhật phụ đề mới và lưu vào thư mục gốc với tên {}'.format(new_srt_name)
 
 
 @app.route("/create-srt/<filename>", methods=["POST"])
@@ -474,21 +465,27 @@ def create_srt(filename):
     path_video = os.path.join('t2',name_video)
     path_save_video_new = path_srt.replace('.srt', '.mp4')
     # Kiểm tra và xóa file nếu đã tồn tại   
-    if os.path.exists(path_save_video_new):
-        os.remove(path_save_video_new) # xoa bỏ nếu tồn tại
+    # if os.path.exists(path_save_video_new):
+        # os.remove(path_save_video_new) # xoa bỏ nếu tồn tại
     if os.path.exists(path_video):
         # path_video -> path dẫn đến video gốc
         # path_srt -> path dẫn đế file srt_name
         # path_save_video_new -> path dẫn đến video 
+        if "_translated" in path_save_video_new:
+            path_save_video_new = path_save_video_new.replace("_translated", "")
         os.system(f'ffmpeg -y -i {path_video} -filter_complex "subtitles={path_srt}" {path_save_video_new}')
         # import subprocess
         # command = ["  , path_video, "-vf", f"subtitles={path_srt}", "-c:a", "copy", path_save_video_new]
         # command = ["ffmpeg", "-i", path_video, "-i" ,path_srt, "-c:v", "copy", "-c:a", "copy", "-c:s", "mov_text", "-metadata:s:s:0",path_save_video_new]
         # subprocess.run(command)
 
-    
     # return render_template('test.html',name=path_video,age=path_srt,a=path_save_video_new)
-    return loading(filename)
+    # return loading(filename)
+    print('path_srt')
+    print(path_srt)
+    print('path_save_video_new')
+    print(path_save_video_new)
+    return redirect(url_for('loading', filename=filename))
 
 
 
