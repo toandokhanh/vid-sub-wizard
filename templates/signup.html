@@ -7,22 +7,30 @@
 {% endif %} {% endwith %}
 <div class="center">
   <div class="login">
-    <h1>Tạo phụ đề cho video</h1>
-    <h3 style="font-size: 40px; margin-top: 5px; color: #20e3b2">Đăng kí</h3>
+    <!-- <h1>Tạo phụ đề cho video</h1> -->
+    <h3 style="text-align: center; margin: 5px 0; color: #ffffff ; font-size: 23px;">Register</h3>
+    <br>
+    <br>
     <form method="POST" class="dangky" autocomplete="off">
       <div class="form-group">
-        <p>Tên tài khoản</p>
-        <input type="text" name="username" id="username" required class="" />
+        <!-- <p>Tên tài khoản</p> -->
+        <input type="text" name="username" id="username" required class="" placeholder="Username"/>
         <span class="message"></span>
       </div>
+      <br>
       <div class="form-group">
-        <p>Mật khẩu</p>
-        <input type="password" name="password" id="password" required />
+        <!-- <p>Mật khẩu</p> -->
+        <input type="password" name="password" id="password" required placeholder="Password"/>
       </div>
-      <input type="submit" value="Đăng ký" name="login" class="dangnhap" />
+      <br>
+      <div class="form-group">
+        <!-- <p>Mật khẩu</p> -->
+        <input type="password" name="password2" id="password" required placeholder="Password"/>
+      </div>  
+      <input style="color: #ffffff; padding: 8px 40px;" type="submit" value="Register" name="login" class="dangnhap" />
     </form>
-    <div class="check">
-      Đã tài khoản? <a href="/" class="regis">Đăng nhập ngay</a>
+    <div class="check" style="font-weight: bold;">
+      Or ?<a href="/login" class="regis"> login</a>
     </div>
   </div>
 </div>

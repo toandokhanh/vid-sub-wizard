@@ -119,21 +119,26 @@ def login():
         
     return render_template('login.html')
 @app.route('/signup',methods=['POST','GET'])
-def dang_ky():
+def signup():
     
     if "user" in session:
         return redirect(url_for('login'))
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        password2 = request.form['password2']
 
         if len(username) < 4:
             flash('Tên tài khoản ít nhất 4 kí tự!')
-            return redirect(url_for('dang_ky'))
+            return redirect(url_for('signup'))
         if len(password) < 6:
             flash('Mật khẩu ít nhất 6 kí tự!')
-            return redirect(url_for('dang_ky'))
-
+            return redirect(url_for('signup'))
+        if len(password2) < 6:
+            flash('Mật khẩu ít nhất 6 kí tự!')
+        if password != password2:
+            flash('Mật khẩu không trùng khớp!')
+            return redirect(url_for('signup'))
         if username not in check_dk():
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -164,7 +169,7 @@ class UploadFileForm(FlaskForm):
     for langs in languages:
         lang = (langs['ma_nn'],langs['ten_nn'])
         language_l.append(lang)
-    language_list = [(None,'Chọn ngôn ngữ')]
+    language_list = [(None,'Select language')]
     language_list.extend(language_l)
 
     cursor2 = conn.cursor(pymysql.cursors.DictCursor)
@@ -179,10 +184,10 @@ class UploadFileForm(FlaskForm):
     language2 = SelectField("Ngôn ngữ 2",choices=language_list)
     name = StringField(u'Tên bài',validators=[InputRequired()])
     algorithm = SelectField("Giảm nhiễu",choices=file_noise)
-    submit = SubmitField("Tạo phụ đề")
+    submit = SubmitField("Create subtitles")
 
 class DownloadFile(FlaskForm):
-    submit2 = SubmitField("Tải phụ đề (.srt)")
+    submit2 = SubmitField("download subtitles (.srt)")
 
 
 @app.route("/index",methods=["POST","GET"])
@@ -227,7 +232,7 @@ def index():
             flash("Tên file đã tồn tại!Vui lòng chọn tên mới")
             return redirect(url_for('index'))
         if language_in == 'None':
-            flash("Chọn ngôn ngữ gốc")
+            flash("Select the original language")
             return redirect(url_for('index'))
         if language_out == 'None':
             flash("Chọn ngôn ngữ đầu ra")

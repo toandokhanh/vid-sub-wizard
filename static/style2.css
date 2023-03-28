@@ -1,5 +1,6 @@
 /********** Template CSS **********/
 :root {
+    /* --primary: #c6e6f7; */
     --primary: #6244C5;
     --secondary: #FFC448;
     --light: #FAFAFB;
@@ -106,7 +107,7 @@
 /*** Header ***/
 #home {
     margin-bottom: 6rem;
-    background: url(img/bg-header.png) left top no-repeat;
+    background: url(img/bg-headerr.png) left top no-repeat;
 }
 
 .typed-cursor {

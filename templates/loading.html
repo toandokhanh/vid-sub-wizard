@@ -1,27 +1,24 @@
 {% extends "base.html" %} {% block title %} Tạo phụ đề cho video {% endblock %}
 {% block content %} {% if session['user'] %}
-<a href="/" class="href"
-  ><i class="fa fa-home" aria-hidden="true"></i>Trang chủ</a
->
-<div class="profile">
-  <div class="account">
-    <span><i class="fa fa-user" aria-hidden="true"></i></span>
-    <p class="name">Chào {{session['user']}}</p>
-  </div>
-  <a href="/lichsu">
-    <i class="fa fa-history"></i>
-    Lịch sử</a
-  >
-  <a href="/dangxuat">
-    <i class="fa fa-sign-out"></i>
-    Đăng xuất</a
-  >
-</div>
+
+  {% include "nav.html" %}
   {% endif %} {% with messages = get_flashed_messages() %} {% if messages %}
   {{messages[2]}} {% endif %} {% endwith %}
 <br>
 <br>
-
+<div class="modal">
+  <div class="loading">
+    <div class="music-waves-2">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="left">
     <div id="wrapper" style="border: 3px solid black;"">
@@ -29,9 +26,9 @@
         <table id="keywords" cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
-                    <th>Thời gian bắt đầu</th>
-                    <th>Thời gian kết thúc</th>
-                    <th>Văn bản</th>
+                    <th style="color: #ffffff;">Start time</th>
+                    <th style="color: #ffffff;">End time</th>
+                    <th style="color: #ffffff;">Text</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,7 +42,7 @@
             </tbody>
         </table>
         <input type="text" name="name_srt" value="{{ srt_name }}" hidden>
-        <button style="margin: 0px 250px;cursor: pointer;" class="change"  type="submit">Cập nhật phụ đề</button>
+        <button style="margin: 0px 250px;cursor: pointer; background-color: #533aa7; color: #ffffff;" class="change"  type="submit">Update subtitle</button>
     </form>        
   </div>
   <form method="POST" enctype="multipart/form-data">
@@ -56,8 +53,8 @@
   <video style="border: 3px solid black;" width="860" height="530" controls>
     <source src="{{url_for('static',filename=filename)}}?v={{timestamp}}" type="video/mp4" />
   </video>
-  <a class="change" style="cursor: pointer" data-name={{filename}} data-nn={{session['nn']}}>
-    srt_name: {{ srt_name }}
+  <a class="change" style="cursor: pointer; background-color: #533aa7; color: #ffffff;" data-name={{filename}} data-nn={{session['nn']}}>
+    Switch to the original language
   </a>
 
   <!-- <div style="color: red">{{session['nn']}}</div> -->

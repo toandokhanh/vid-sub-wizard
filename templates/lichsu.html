@@ -1,39 +1,21 @@
 {% extends "base.html" %} {% block title %} Tạo phụ đề cho video {% endblock %}
 {% block content %}
-<div>
-  <a href="/" class="href"
-    ><i class="fa fa-home" aria-hidden="true"></i>Trang chủ</a
-  >
-  <!-- {{message}} -->
-  {% if session['user'] %}
-  <div class="profile">
-    <div class="account">
-      <span><i class="fa fa-user" aria-hidden="true"></i></span>
-      <p class="name">{{session['user']}}</p>
-    </div>
-    <a href="/lichsu">
-      <i class="fa fa-history"></i>
-      Lịch sử</a
-    >
-    <a href="/dangxuat">
-      <i class="fa fa-sign-out"></i>
-      Đăng xuất</a
-    >
-  </div>
-  {% endif %} {% if quantity > 0 %}
-  <h1 class="mb-10">Lịch sử tạo phụ đề</h1>
-  <h3>Hiện tại có {{quantity}} video đã tạo phụ đề</h3>
+  {% include "nav.html" %}
+  {% if quantity > 0 %}
+  <br>
+  <h1 class="mb-10">History of creating subtitles</h1>
+  <h3>There are now {{quantity}} subtitled videos</h3>
 
   <div class="history">
     <div id="wrapper">
       <table border="1">
         <thead>
           <tr>
-            <th>Tên video</th>
-            <th>Ngôn ngữ</th>
-            <th>Ngày upload</th>
-            <th>Xem</th>
-            <th>Xoá</th>
+            <th style="color: #ffffff;">Video name</th>
+            <th style="color: #ffffff;">Language</th>
+            <th style="color: #ffffff;">Upload date</th>
+            <th style="color: #ffffff;">View</th>
+            <th style="color: #ffffff;">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -47,12 +29,12 @@
             <td>{{file['ngay_up']}}</td>
             <th style="cursor: pointer">
               <a class="view_srt" href="loading/{{file['output_mp4']}}"
-                >Xem <i class="fa fa-eye" aria-hidden="true"></i
+                >View <i class="fa fa-eye" aria-hidden="true"></i
               ></a>
             </th>
             <th style="cursor: pointer">
               <a class="delete_srt" data-name="{{file['output_mp4']}}"
-                >Xoá <i class="fa fa-remove" aria-hidden="true"></i
+                >Delete <i class="fa fa-remove" aria-hidden="true"></i
               ></a>
             </th>
           </tr>
@@ -65,7 +47,7 @@
   <h3 class="empty">
     <span>Lịch sử tạo phụ đề trống</span>
     <i class="fa fa-folder-open-o" aria-hidden="true"></i>
-    <a href="/">Tạo phụ đề ngay 😙</a>
+    <a href="/index">Tạo phụ đề ngay 😙</a>
   </h3>
   {% endif %}
 </div>
