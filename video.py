@@ -99,16 +99,16 @@ def login():
         cursor.execute("SELECT * from user WHERE username=%s",username)
         userlist = cursor.fetchall()
         if not userlist:
-            flash("Tài khoản hoặc mật khẩu không đúng!")
+            flash("Incorrect account or password!") # sai tk hoặc mk
         name = userlist[0]['username']
         pass_word = userlist[0]['password']
         password = password.hexdigest()
         if username == name and password == pass_word:
                 session['user'] = username
-                flash("Đăng nhập thành công")
+                flash("Logged in successfully") 
                 return redirect(url_for("index"))
         else:
-            flash("Mật khẩu không đúng!")
+            flash("Incorrect account or password!")
             
     except Exception as e:
         print(e)
@@ -129,15 +129,15 @@ def signup():
         password2 = request.form['password2']
 
         if len(username) < 4:
-            flash('Tên tài khoản ít nhất 4 kí tự!')
+            flash('Username must be at least 4 characters!')
             return redirect(url_for('signup'))
         if len(password) < 6:
-            flash('Mật khẩu ít nhất 6 kí tự!')
+            flash('Password at least 6 characters!')
             return redirect(url_for('signup'))
         if len(password2) < 6:
-            flash('Mật khẩu ít nhất 6 kí tự!')
+            flash('Password at least 6 characters!')
         if password != password2:
-            flash('Mật khẩu không trùng khớp!')
+            flash('Password does not match!')
             return redirect(url_for('signup'))
         if username not in check_dk():
             conn = mysql.connect()
@@ -145,10 +145,10 @@ def signup():
             cursor.execute("INSERT INTO user(username,password) VALUES(%s,MD5(%s))",(username,password))
             conn.commit()
             session['user'] = username
-            flash("Đăng kí thành công")
+            flash("Sign Up successfully")
             return redirect(url_for('index'))
         else:
-            flash("Tài khoản đã tồn tại!")
+            flash("Account already exists!")
 
 
         
@@ -225,17 +225,17 @@ def index():
         newname = form.name.data
       
         if file_ext not in app.config['ALLOWED_VIDEO_EXTENSION']:
-            flash("Định dạng file không hợp lệ!")
+            flash("Invalid file format!")# Định dạng file không hợp lệ!
             return redirect(url_for('index'))
         
         if newname in check_name():
-            flash("Tên file đã tồn tại!Vui lòng chọn tên mới")
+            flash("Filename already exists! Please choose a new name")# Tên file đã tồn tại!Vui lòng chọn tên mới
             return redirect(url_for('index'))
         if language_in == 'None':
             flash("Select the original language")
             return redirect(url_for('index'))
         if language_out == 'None':
-            flash("Chọn ngôn ngữ đầu ra")
+            flash("Select output language") #Chọn ngôn ngữ đầu ra
             return redirect(url_for('index'))
         os.makedirs(PATH, exist_ok=True)
         # Thời gian bắt đầu thực thi
@@ -243,7 +243,12 @@ def index():
         file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
         file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['SOURCE'],secure_filename(file.filename)))
        
-        
+        print('PATH+file.filename')
+        print(PATH+file.filename)
+        print('language_in')
+        print(language_in)
+        print('language_out')
+        print(language_out)
         os.system('python3 phude.py {} -s {} -d {} -noise {} -n {} '.format(PATH+file.filename,language_in,language_out,choose_algorithm,newname))
 
         if language_in == language_out:
@@ -257,6 +262,8 @@ def index():
         # 
         file_output = newname + '.mp4'
         shutil.move(PATH+file_output, source)
+        print('PATH+file_output, source--------------------')
+        print(PATH+file_output, source)
         # Thời gian kết thúc
         if language_in != language_out: 
             os.system('ffmpeg -y -i {} -filter_complex "subtitles={}" {}'.format(PATH+file.filename,source+newname+'.srt',source+newname+'_out.mp4'))
@@ -349,9 +356,9 @@ def loading(filename):
         end_time = sub.end.to_time()
         text = sub.text
         subtitles.append({'start_time': start_time, 'end_time': end_time, 'text': text})
-    print('debug')
+    count = 0
     timestamp = int(time.time())
-    return render_template("loading.html",down=down,filename=SOURCE+filename,subtitles=subtitles,srt_name=srt_name, timestamp=timestamp)
+    return render_template("loading.html",down=down,filename=SOURCE+filename,subtitles=subtitles,srt_name=srt_name, timestamp=timestamp,count=count)
 
 
 @app.route("/dangxuat")
@@ -361,7 +368,7 @@ def dangxuat():
         redirect(url_for("login"))
     if "user" in session:
         session.pop("user",None)
-        flash("Đăng xuất thành công!")
+        flash("Sign out successful!")
     return redirect(url_for("login"))
 # def success():
 #     return render_template("success.html")
@@ -416,7 +423,7 @@ def xoa(filename):
     cursor3 = conn.cursor(pymysql.cursors.DictCursor)
     cursor3.execute("DELETE FROM ketquataophude WHERE username=%s and output_mp4=%s",(user,filename))
     conn.commit()
-    flash("File {} được xoá thành công".format(filename))
+    flash("File {} was deleted successfully".format(filename))
     return redirect(url_for('lichsu'))
 
 # 24/3
@@ -430,7 +437,6 @@ def xoa(filename):
 #     # Lưu thông tin phụ đề vào file srt
 
 #     return redirect(url_for('index'))
-
 
 @app.route("/create-srt/<filename>", methods=["POST"])
     
@@ -448,32 +454,16 @@ def create_srt(filename):
             end_time = request.form.get(f'end_{i+1}')
             text = request.form.get(f'text_{i+1}')
             f.write(f'{i+1}\n{start_time} --> {end_time}\n{text}\n\n')
-    subs = pysrt.open(path_srt)
-    subtitles = []
-    for sub in subs:    
-        start_time = sub.start.to_time()
-        end_time = sub.end.to_time()
-        text = sub.text
-        subtitles.append({'start_time': start_time, 'end_time': end_time, 'text': text})
-    # return loading(filename)\
-    # Tạo đối tượng cursor để thao tác với cơ sở dữ liệu
     conn = mysql.connect()
     cursor1 = conn.cursor()
     cursor = conn.cursor()
-    # Thực hiện truy vấn SQLl
     cursor.execute("SELECT name_video FROM ketquataophude WHERE output_srt='" + srt_name + "'")
-    # Lấy kết quả trả về từ truy vấn
     results = cursor.fetchall()
-
-    # In kết quả ra màn hình
     for row in results:
         name_video = row[0]
     conn.close()
     path_video = os.path.join('t2',name_video)
     path_save_video_new = path_srt.replace('.srt', '.mp4')
-    # Kiểm tra và xóa file nếu đã tồn tại   
-    # if os.path.exists(path_save_video_new):
-        # os.remove(path_save_video_new) # xoa bỏ nếu tồn tại
     if os.path.exists(path_video):
         # path_video -> path dẫn đến video gốc
         # path_srt -> path dẫn đế file srt_name
@@ -481,11 +471,6 @@ def create_srt(filename):
         if "_translated" in path_save_video_new:
             path_save_video_new = path_save_video_new.replace("_translated", "")
         os.system(f'ffmpeg -y -i {path_video} -filter_complex "subtitles={path_srt}" {path_save_video_new}')
-        # import subprocess
-        # command = ["  , path_video, "-vf", f"subtitles={path_srt}", "-c:a", "copy", path_save_video_new]
-        # command = ["ffmpeg", "-i", path_video, "-i" ,path_srt, "-c:v", "copy", "-c:a", "copy", "-c:s", "mov_text", "-metadata:s:s:0",path_save_video_new]
-        # subprocess.run(command)
-
     # return render_template('test.html',name=path_video,age=path_srt,a=path_save_video_new)
     # return loading(filename)
     print('path_srt')
@@ -493,10 +478,6 @@ def create_srt(filename):
     print('path_save_video_new')
     print(path_save_video_new)
     return redirect(url_for('loading', filename=filename))
-
-
-
-
 
 
 
@@ -515,4 +496,4 @@ if __name__ == "__main__":
 
 
 
-    
+

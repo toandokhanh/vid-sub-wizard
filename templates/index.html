@@ -5,7 +5,7 @@
 {% include "nav.html" %}
 
 <div class="modal">
-  <div class="loading">
+  <div class="loading" style="display: flex; flex-direction: column;">
     <div class="music-waves-2">
       <span></span>
       <span></span>
@@ -13,8 +13,9 @@
       <span></span>
       <span></span>
       <span></span>
-      <span></span>
-    </div>
+      <span></span> <br>
+    </div> <br>
+    <p style="color: #ffffff;">Creating subtitles for your video ...</p>
   </div>
 </div>
 {% endif %} {% with messages = get_flashed_messages() %} {% if messages %}
