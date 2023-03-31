@@ -101,34 +101,52 @@
 // code này fix lỗi khi xóa row
 $(document).on('click', '.fa-times', function() {
   var row = $(this).closest('tr');
-  if (row.is(':last-child')) {
-    return;
-  }
-  row.remove();
   var index = row.data('index');
-  $('tr').each(function() {
-    var current_index = $(this).data('index');
-    if (current_index > index) {
-      $(this).data('index', current_index - 1);
-      $(this).find('input[name^="start_"]').attr('name', 'start_' + (current_index - 1));
-      $(this).find('input[name^="end_"]').attr('name', 'end_' + (current_index - 1));
-      $(this).find('textarea[name^="text_"]').attr('name', 'text_' + (current_index - 1));
-      $(this).find('.fa-plus').off('click').on('click', function() {
-        addRow(current_index - 1);
-      });
-      $(this).find('.fa-times').off('click').on('click', function() {
-        deleteRow(current_index - 1);
-      });
-      $(this).find('.fa-pencil-alt').off('click').on('click', function() {
-        editRow(current_index - 1);
-      });
-    }
+  
+  // Xóa các hàng sau hàng bị xóa
+  row.nextAll().each(function() {
+    var nextIndex = $(this).data('index');
+    $(this).data('index', nextIndex - 1);
+    $(this).find('[name^="start_"]').attr('name', 'start_' + (nextIndex - 1));
+    $(this).find('[name^="end_"]').attr('name', 'end_' + (nextIndex - 1));
+    $(this).find('[name^="text_"]').attr('name', 'text_' + (nextIndex - 1));
+    $(this).find('span:first-child').text(nextIndex - 1);
   });
+  
+  // Xóa hàng bị xóa
+  row.remove();
 });
 
-function deleteRow(index) {
-  $('tr[data-index="' + index + '"] .fa-times').trigger('click');
-}
+
+
+
+
+// $(document).on('click', '.fa-times', function() {
+//   var row = $(this).closest('tr');
+//   if (row.is(':last-child')) {
+//     return;
+//   }
+//   row.remove();
+//   var index = row.data('index');
+//   // console.log(index);
+//   $('tr').each(function() {
+//     var current_index = $(this).data('index');
+//     if (current_index > index) {
+//       console.log("current_index");
+
+//       console.log(current_index);
+
+//       $(this).data('index', current_index - 1);
+//       $(this).find('input[name^="start_"]').attr('name', 'start_' + (current_index - 1));
+//       $(this).find('input[name^="end_"]').attr('name', 'end_' + (current_index - 1));
+//       $(this).find('textarea[name^="text_"]').attr('name', 'text_' + (current_index - 1));
+//     }
+//   });
+// });
+
+// function deleteRow(index) {
+//   $('tr[data-index="' + index + '"] .fa-times').trigger('click');
+// }
 
 </script>
 {% endblock %}
