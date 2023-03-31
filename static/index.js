@@ -1,13 +1,14 @@
-// // let inputFile = document.querySelector("#file");
-let inputSubmit = document.querySelector("#submit");
-let modal = document.querySelector(".modal");
-let form = document.querySelector(".index");
-let select = document.querySelector("#language");
-let viewSrt = document.querySelectorAll("tbody .view_srt");
-let deleteSrt = document.querySelectorAll("tbody .delete_srt");
-let dangki = document.querySelector(".dangky");
-let change = document.querySelector(".change");
-flash = document.querySelector(".flash");
+// const inputFile = document.querySelector("#file");
+const inputSubmit = document.querySelector("#submit");
+const modal = document.querySelector(".modal");
+const form = document.querySelector(".index");
+const form_loading = document.querySelector(".loading");
+const select = document.querySelector("#language");
+const viewSrt = document.querySelectorAll("tbody .view_srt");
+const deleteSrt = document.querySelectorAll("tbody .delete_srt");
+const dangki = document.querySelector(".dangky");
+const change = document.querySelector(".change");
+const flash = document.querySelector(".flash");
 
 
 
@@ -19,6 +20,14 @@ window.onload = () => {
   }
   if (form) {
     form.onsubmit = () => {
+      // if (select.value == "None") {
+      //   // alert("Hi");
+      // }
+      modal.classList.add("active");
+    };
+  }
+  if (form_loading) {
+    form_loading.onsubmit = () => {
       // if (select.value == "None") {
       //   // alert("Hi");
       // }
@@ -44,7 +53,7 @@ if (deleteSrt) {
   deleteSrt.forEach((item) => {
     item.onclick = () => {
       data = item.dataset.name;
-      let a = confirm(`Bạn có muốn xoá video ${data}!`);
+      const a = confirm(`Bạn có muốn xoá video ${data}!`);
       if (a) {
         location.href = `/xoa/${data}`;
       }
@@ -79,16 +88,26 @@ if (change) {
 }
 
 
-// const createSRT = () => {
-//   var rows = document.querySelectorAll('#keywords tbody tr');
-//   var subtitles = [];
-//   for (var i = 0; i < rows.length; i++) {
-//     var row = rows[i];
-//     var startTime = row.cells[0].innerText;
-//     var endTime = row.cells[1].innerText;
-//     var text = row.cells[2].getElementsByTagName('textarea')[0].value;
-//     subtitles.push({'start_time': startTime, 'end_time': endTime, 'text': text});
-//     console.log(subtitles);
-//   }
-// }
+$(document).ready(function() {
+  $('textarea').focus(function() {
+    // Lấy thời gian bắt đầu từ hàng chứa <textarea>
+    var start_time = $(this).closest('tr').find('input[name^="start_"]').val();
+    // Tìm đối tượng video và thiết lập thời gian hiển thị
+    var video = $('video')[0];
+    video.currentTime = convertTimeToSeconds(start_time);
+    // video.play();
+  });
+  
+  // Hàm chuyển đổi định dạng thời gian sang giây
+  function convertTimeToSeconds(time) {
+    var parts = time.split(':');
+    var hour = parseInt(parts[0]);
+    var minute = parseInt(parts[1]);
+    var second = parseFloat(parts[2].replace(',', '.'));
+    console.log(second);
+    second = second + 0.06;
+    console.log(second);
+    return hour * 3600 + minute * 60 + second;
+  }
+});
 

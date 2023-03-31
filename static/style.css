@@ -122,37 +122,37 @@ form {
 
 .music-waves-2 > span:nth-child(1) {
   animation-delay: 0s;
-  background: #ff8c00;
+  background: #6244C5;
 }
 
 .music-waves-2 > span:nth-child(2) {
   animation-delay: 0.3s;
-  background: #ffff00;
+  background: #6244C5;
 }
 
 .music-waves-2 > span:nth-child(3) {
   animation-delay: 0.6s;
-  background: #26d53a;
+  background: #6244C5;
 }
 
 .music-waves-2 > span:nth-child(4) {
   animation-delay: 0.9s;
-  background: #26e6a3;
+  background: #6244C5;
 }
 
 .music-waves-2 > span:nth-child(5) {
   animation-delay: 0.6s;
-  background: #1da8e2;
+  background: #6244C5;
 }
 
 .music-waves-2 > span:nth-child(6) {
   animation-delay: 0.3s;
-  background: #5916ba;
+  background: #6244C5;
 }
 
 .music-waves-2 > span:nth-child(7) {
   animation-delay: 0s;
-  background: #d418d9;
+  background: #6244C5;
 }
 
 @keyframes waves-2 {
@@ -235,7 +235,7 @@ input[type="submit"] {
   font-family: Open Sans;
   font-weight: 500 ;
   line-height: 24px;
-  margin: 30px 48px 0px 30px;
+  margin: 15px 48px 0px 30px;
   padding: 10px 30px;
   text-align: center;
   /* transition: all 0.5s linear; */
@@ -289,14 +289,13 @@ input[type="submit"] {
   list-style: none;
   height: 50px;
   width: 300px;
-  background-color: #eee;
+  background-color: rgb(215, 215, 215);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   position: absolute;
   /* right: 20px; */
-  /* top: 20px; */
-  top: 50px;
+  top: 60px;
   right: 0;
   animation: nhay 2s forwards 1;
   /* transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1); */
@@ -329,7 +328,7 @@ input[type="submit"] {
   width: 5px;
   left: 0;
   top: 0;
-  background-color: #20e3b2;
+  background-color: #6244C5;
   position: absolute;
 }
 
@@ -398,7 +397,9 @@ input[type="submit"] {
   align-items: center;
   gap: 10px;
 }
-
+.index.fixindex{
+  display: block;
+}
 .subtitle {
   display: flex;
   flex-direction: column;
@@ -413,16 +414,18 @@ input[type="submit"] {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  flex: 4;
+  flex: 5;
   margin-right: 30px;
+  margin-top:-35px;
+
 }
 .right {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  flex: 6;
-  margin-top:2px;
+  flex: 5;
+  margin-top:-35px;
 }
 video {
   border: 3px solid black;
@@ -490,7 +493,7 @@ input {
   border: 3px solid red;
 }
 .dangky input.success {
-  border: 3px solid #20e3b2;
+  border: 3px solid #6244C5;
 }
 
 .message {
@@ -520,9 +523,16 @@ input {
   margin-top: 15px;
   padding: 10px;
   border-radius: 6px;
-  background-color: #6a5af9;
+  background-color: #533aa7;
   outline: none;
   border: 0;
+  border-radius: 10px;
+  color: #ffffff;
+  font-family:Open Sans;
+  font-size: 13.3333px;
+  font-weight: 500;
+  line-height: 24px;
+  padding: 10px 30px;
 }
 
 

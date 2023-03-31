@@ -1,28 +1,30 @@
-{% extends "base.html" %} {% block title %} Tạo phụ đề cho video {% endblock %}
-{% block content %} {% if session['user'] %}
+  {% extends "base.html" %} {% block title %} Tạo phụ đề cho video {% endblock %}
+  {% block content %} {% if session['user'] %}
 
-  {% include "nav.html" %}
-  {% endif %} {% with messages = get_flashed_messages() %} {% if messages %}
-  {{messages[2]}} {% endif %} {% endwith %}
-<br>
-<br>
-<div class="modal">
-  <div class="loading">
-    <div class="music-waves-2">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
+    {% include "nav.html" %}
+    {% endif %} {% with messages = get_flashed_messages() %} {% if messages %}
+    {{messages[2]}} {% endif %} {% endwith %}
+  <br>
+  <br>
+
+  <div class="modal">
+    <div class="loading" style="display: flex; flex-direction: column;">
+      <div class="music-waves-2">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span> <br>
+      </div> <br>
+      <p style="color: #ffffff;">Updating new subtitles ...</p>
     </div>
   </div>
-</div>
 <div class="container">
   <div class="left">
     <div id="wrapper" style="border: 3px solid black;"">
-      <form action="{{ url_for('create_srt', filename=filename.split("/")[-1]) }}" method="POST"> 
+      <form action="{{ url_for('create_srt', filename=filename.split("/")[-1]) }}" method="POST" class="index fixindex"> 
         <table id="keywords" cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
@@ -32,17 +34,24 @@
                 </tr>
             </thead>
             <tbody>
-                {% for sub in subtitles %}
-                <tr>
-                  <td><input type="text" name="start_{{ loop.index }}" value="{{ sub.start_time.strftime('%H:%M:%S,%f')[:-3] }}" step="0.001" ></td>
-                  <td><input type="text" name="end_{{ loop.index }}" value="{{ sub.end_time.strftime('%H:%M:%S,%f')[:-3] }}" step="0.001" ></td>                  
-                  <td><textarea rows="2" cols="30" name="text_{{ loop.index }}" required>{{ sub.text }}</textarea></td>
-                </tr>
-                {% endfor %}
+              {% set sorted_subs = subtitles|sort(attribute='start_time') %}
+              {% for sub in sorted_subs %}
+              {% set count = loop.index %}
+              <tr data-index="{{ count }}">
+                <td><input type="text" name="start_{{ count }}" value="{{ sub.start_time.strftime('%H:%M:%S,%f')[:-3] }}" step="0.001" ></td>
+                <td><input type="text" name="end_{{ count }}" value="{{ sub.end_time.strftime('%H:%M:%S,%f')[:-3] }}" step="0.001" ></td>                  
+                <td style="position: relative;"><textarea rows="4" cols="30" name="text_{{ count }}" required">{{ sub.text }}</textarea>
+                  <span style="font-size: 8px; color: #6244c5; margin-top: -100px; position: absolute; top:143%;left:-380px; cursor: pointer; font-size: 12px; font-weight: 700;">{{ count }}</span>
+                  <span style="font-size: 8px; color: #6244c5; margin-top: -100px; position: absolute; top:120%;right: -10px; cursor: pointer;"><i class="fa fa-plus fa-2x"></i></span>
+                  <span style="font-size: 8px; color: #b93a3c; margin-top: -100px; position: absolute; top:165%;right: -10px; cursor: pointer;"><i class="fa fa-times fa-2x"></i></span>
+                </td>
+              </tr>
+              {% endfor %}
             </tbody>
         </table>
         <input type="text" name="name_srt" value="{{ srt_name }}" hidden>
-        <button style="margin: 0px 250px;cursor: pointer; background-color: #533aa7; color: #ffffff;" class="change"  type="submit">Update subtitle</button>
+        <input style="margin: 0px 235px;cursor: pointer; background-color: #533aa7; color: #ffffff;" class="change" id="submit" type="submit" value="Update subtitle">
+        <p></p>
     </form>        
   </div>
   <form method="POST" enctype="multipart/form-data">
@@ -50,7 +59,7 @@
   </form> 
   </div>
 <div class="right">
-  <video style="border: 3px solid black;" width="860" height="530" controls>
+  <video id="my-video-player" style="border: 3px solid black;" width="860" height="530" controls>
     <source src="{{url_for('static',filename=filename)}}?v={{timestamp}}" type="video/mp4" />
   </video>
   <a class="change" style="cursor: pointer; background-color: #533aa7; color: #ffffff;" data-name={{filename}} data-nn={{session['nn']}}>
@@ -60,13 +69,66 @@
   <!-- <div style="color: red">{{session['nn']}}</div> -->
 </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
-  window.addEventListener('load', function() {
-  // Refresh cache
-  navigator.serviceWorker.register('/sw.js').then(function(registration) {
-      registration.update();
-      console.log("debug")
+  $(document).ready(function() {
+  // thêm row mới
+  $(document).on('click', '.fa-plus', function() {
+    
+    var currentRow = $(this).closest('tr');
+    var countjs = $('#keywords tbody tr').length + 1; // Lấy số lượng hàng hiện tại và cộng thêm 1 cho hàng mới
+    
+    var newRow = $(
+    '{% set sorted_subs = subtitles|sort(attribute="start_time") %}' +
+    '<tr data-index="' + countjs + '">'+ // Sử dụng giá trị động ở đây
+      '<td><input type="text" name="start_' + countjs + '" value="00:00:00,000" step="0.001" ></td>' + // Sử dụng giá trị động ở đây
+      '<td><input type="text" name="end_' + countjs + '" value="00:00:00,000" step="0.001" ></td>' + // Sử dụng giá trị động ở đây
+      '<td style="position: relative;"><textarea rows="4" cols="30" name="text_' + countjs + '" required></textarea>' +
+      '<span style="font-size: 8px; color: #6244c5; margin-top: -100px; position: absolute; top:143%;left:-380px; cursor: pointer; font-size: 12px; font-weight: 700;">?</span>' +
+      '<span style="font-size: 8px; color: #6244c5; margin-top: -100px; position: absolute; top:120%;right: -10px; cursor: pointer;"><i class="fa fa-plus fa-2x"></i></span>' +
+      '<span style="font-size: 8px; color: #b93a3c; margin-top: -100px; position: absolute; top:165%;right: -10px; cursor: pointer;"><i class="fa fa-times fa-2x"></i></span>' +
+      '</td>' +
+    '</tr>');
+    
+    currentRow.after(newRow);
+  });
+
+  // Xóa hàng khi click vào icon times
+  $(document).on('click', '.fa-times', function() {
+    $(this).closest('tr').remove();
   });
 });
+// code này fix lỗi khi xóa row
+$(document).on('click', '.fa-times', function() {
+  var row = $(this).closest('tr');
+  if (row.is(':last-child')) {
+    return;
+  }
+  row.remove();
+  var index = row.data('index');
+  $('tr').each(function() {
+    var current_index = $(this).data('index');
+    if (current_index > index) {
+      $(this).data('index', current_index - 1);
+      $(this).find('input[name^="start_"]').attr('name', 'start_' + (current_index - 1));
+      $(this).find('input[name^="end_"]').attr('name', 'end_' + (current_index - 1));
+      $(this).find('textarea[name^="text_"]').attr('name', 'text_' + (current_index - 1));
+      $(this).find('.fa-plus').off('click').on('click', function() {
+        addRow(current_index - 1);
+      });
+      $(this).find('.fa-times').off('click').on('click', function() {
+        deleteRow(current_index - 1);
+      });
+      $(this).find('.fa-pencil-alt').off('click').on('click', function() {
+        editRow(current_index - 1);
+      });
+    }
+  });
+});
+
+function deleteRow(index) {
+  $('tr[data-index="' + index + '"] .fa-times').trigger('click');
+}
+
 </script>
 {% endblock %}
