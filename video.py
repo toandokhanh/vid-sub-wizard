@@ -454,6 +454,7 @@ def create_srt(filename):
             end_time = request.form.get(f'end_{i+1}')
             text = request.form.get(f'text_{i+1}')
             f.write(f'{i+1}\n{start_time} --> {end_time}\n{text}\n\n')
+
     conn = mysql.connect()
     cursor1 = conn.cursor()
     cursor = conn.cursor()
