@@ -262,8 +262,7 @@ def index():
         # 
         file_output = newname + '.mp4'
         shutil.move(PATH+file_output, source)
-        print('PATH+file_output, source--------------------')
-        print(PATH+file_output, source)
+
         # Thời gian kết thúc
         if language_in != language_out: 
             os.system('ffmpeg -y -i {} -filter_complex "subtitles={}" {}'.format(PATH+file.filename,source+newname+'.srt',source+newname+'_out.mp4'))
@@ -393,12 +392,6 @@ def lichsu():
         quantity = get_num_of_items()
 
         return render_template("lichsu.html",data=userlist1,quantity=quantity)
-
-        # return render_template("lichsu.html",data=userlist1,quantity=quantity)
-        
-
-        
-        # return redirect(url_for("index"))
     except Exception as e:
         print(e)
     finally:
@@ -426,17 +419,6 @@ def xoa(filename):
     flash("File {} was deleted successfully".format(filename))
     return redirect(url_for('lichsu'))
 
-# 24/3
-# @app.route('/update-subtitle', methods=['POST'])
-# def update_subtitle():
-#     srt_name = request.form['srt_name']
-#     for key in request.form:
-#         if key.startswith('text_'):
-#             # Xử lý thông tin về thời gian và nội dung phụ đề tương ứng với key này
-            
-#     # Lưu thông tin phụ đề vào file srt
-
-#     return redirect(url_for('index'))
 
 @app.route("/create-srt/<filename>", methods=["POST"])
     
@@ -454,7 +436,6 @@ def create_srt(filename):
             end_time = request.form.get(f'end_{i+1}')
             text = request.form.get(f'text_{i+1}')
             f.write(f'{i+1}\n{start_time} --> {end_time}\n{text}\n\n')
-
     conn = mysql.connect()
     cursor1 = conn.cursor()
     cursor = conn.cursor()
@@ -472,6 +453,9 @@ def create_srt(filename):
         if "_translated" in path_save_video_new:
             path_save_video_new = path_save_video_new.replace("_translated", "")
         os.system(f'ffmpeg -y -i {path_video} -filter_complex "subtitles={path_srt}" {path_save_video_new}')
+
+        
+        
     # return render_template('test.html',name=path_video,age=path_srt,a=path_save_video_new)
     # return loading(filename)
     print('path_srt')
