@@ -1,0 +1,6 @@
+*.scss linguist-language=SCSS
+*.py linguist-language=Python
+*.html linguist-language=HTML
+*.css linguist-language=CSS
+*.js linguist-language=JavaScript
+*.sh linguist-language=Shell
