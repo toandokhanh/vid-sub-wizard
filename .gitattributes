@@ -1,4 +1,4 @@
-*.scss linguist-language=SCSS
+*.scss linguist-language=Python
 *.py linguist-language=Python
 *.html linguist-language=HTML
 *.css linguist-language=CSS
