@@ -6,13 +6,10 @@
 
     pip3 install -r requirements.txt
 
-#### Chạy tạo phụ đề riêng
-
-    python3 phude.py
-
 #### Chạy web (Flask) + tự động chạy file
 
     python3 video.py
+    
 #### Cơ sở dữ liệu
 
 - Trong file database cùng tên (dùng Xampp Mysql) (nếu đổi tên csdl thì vào file video.py)
@@ -22,8 +19,6 @@
 - app.config['MYSQL_DATABASE_DB']= 'ten csdl mới'
 
 - Database: subtitle.sql
-
-
 #### Url: đường đẫn file (.mp4) 
 
     -s: ngôn ngữ nguồn.
@@ -79,16 +74,13 @@
 
 =>Not parameter -noise because choose_noise is 'no'
 
-#### Tính phần trăm cosine
+#### Tính phần trăm cosine (độ tương đồng)
 
     python3 comparison_log -train train -compare template_log
 
 - train: tham số tryền vào là thư mục cần so sánh với file gốc (trong đó train: là thư mục sau khi tạo phụ đề cần so sánh với nội dung gốc)
 
 - compare: tham số truyền vào là thư mục file gốc (fileSoSanh: là thư mục có nội dung gốc)
-
-
-
 
 #### Cấu trúc thư mục  
 
@@ -103,29 +95,3 @@
         ├───not (ouput của phụ đề không có giải thuật)
             ├───video.mp4 (Video gốc có tiếng ồn)
     └───template_log (thư mục chứa video và file txt gốc không có tiếng ồn)
-
-
-#### Cách đặt tên file video
-    <NgonNgu>_<TacNhan>_<GioiTinh>_<SochuTrongVideo>_<STT>.mp4
-
-    vd: EN_gg_1_50_01.mp4
-- Ngôn ngữ
-    + EN: ngôn ngữ English  
-    + VI: ngôn ngữ Việt Nam
-- tác nhân
-    + gg: google translate đọc
-    + art: artificial (giọng con người đọc)
-- Giới tính
-    + 1: nam
-    + 0: nữ
-- Số chữ trong video
-    + 50: video chứa < 50 chữ
-    + 100: video chứa từ 50 - 100 chữ
-    + 300: video chứa từ 100 - 300 chữ
-    + 500: video chứa từ 500 - 1000 chữ
-    + 1000: video chứa từ > 1000 chữ
-- Số thứ tự của video
-    + 01
-    + 02
-             
-<!-- End  -->
