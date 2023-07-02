@@ -21,7 +21,7 @@
 
 - app.config['MYSQL_DATABASE_DB']= 'ten csdl mới'
 
-- Database: phude.sql
+- Database: subtitle.sql
 
 
 #### Url: đường đẫn file (.mp4) 
@@ -112,7 +112,7 @@
 - Ngôn ngữ
     + EN: ngôn ngữ English  
     + VI: ngôn ngữ Việt Nam
-- Công cụ
+- tác nhân
     + gg: google translate đọc
     + art: artificial (giọng con người đọc)
 - Giới tính
@@ -127,109 +127,5 @@
 - Số thứ tự của video
     + 01
     + 02
-    + 03
              
-#### Cách đặt tên file video có tiếng ồn
-    <NgonNgu>_<CongCu>_<GioiTinh>_<SochuTrongVideo>_<GiaiThuatChongTiengOn>_<LoaiTiengOn>_<STT>.mp4
-    
-- VietNam 50
-
-        VI_gg_0_50_01
-        VI_gg_1_50_01
-        VI_gg_0_50_02
-        VI_gg_1_50_02
-        VI_art_0_50_01
-        VI_art_1_50_01
-        VI_art_0_50_02
-        VI_art_1_50_02
-
-- VietNam 100
-
-        VI_gg_0_100_01  
-        VI_gg_1_100_01
-        VI_gg_0_100_02
-        VI_gg_1_100_02
-        VI_art_0_100_01
-        VI_art_1_100_01
-        VI_art_0_100_02
-        VI_art_1_100_02
-
-- VietNam 300
-
-        VI_gg_0_300_01
-        VI_gg_1_300_01
-        VI_gg_0_300_02
-        VI_gg_1_300_02
-        VI_art_0_300_01
-        VI_art_1_300_01
-        VI_art_0_300_02
-        VI_art_1_300_02
-
-- VietNam 500
-
-        VI_gg_0_500_01
-        VI_gg_1_500_01
-        VI_gg_0_500_02
-        VI_gg_1_500_02
-        VI_art_0_500_01
-        VI_art_1_500_01
-        VI_art_0_500_02
-        VI_art_1_500_02
-
-- VietNam 1000
-
-        VI_gg_0_1000_01
-        VI_gg_1_1000_01
-        VI_gg_0_1000_02
-        VI_gg_1_1000_02
-        VI_art_0_1000_01
-        VI_art_1_1000_01
-        VI_art_0_1000_02
-        VI_art_1_1000_02
-
-- English 50
-
-        EN_gg_0_50_01
-        EN_gg_1_50_01
-        EN_gg_0_50_02
-        EN_gg_1_50_02
-        EN_art_0_50_01
-        EN_art_1_50_01
-        EN_art_0_50_02
-        EN_art_1_50_02
-
-- English 100
-
-        EN_gg_0_100_01
-        EN_gg_1_100_01
-        EN_gg_0_100_02
-        EN_gg_1_100_02
-        EN_art_0_100_01
-        EN_art_1_100_01
-        EN_art_0_100_02
-        EN_art_1_100_02
-
-- English 300
-
-        EN_gg_0_300_01
-        EN_gg_1_300_01
-        EN_gg_0_300_02
-        EN_gg_1_300_02
-        EN_art_0_300_01
-        EN_art_1_300_01
-        EN_art_0_300_02
-        EN_art_1_300_02
-
-- English 500
-
-        EN_gg_0_500_01
-        EN_gg_1_500_01
-        EN_art_0_500_01
-        EN_art_1_500_01
-
-- English 1000
-
-        EN_gg_0_1000_01
-        EN_gg_1_1000_01
-        EN_art_0_1000_01
 <!-- End  -->

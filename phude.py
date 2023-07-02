@@ -1,9 +1,9 @@
 import argparse
 import os,sys
+import createsub
 
 from regex import F
 from datetime import datetime
-import createsub
 from srtToTxt import srt_to_txt
 
 import noisereduce as nr
