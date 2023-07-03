@@ -6,13 +6,10 @@
 
     pip3 install -r requirements.txt
 
-#### Chạy tạo phụ đề riêng
-
-    python3 phude.py
-
 #### Chạy web (Flask) + tự động chạy file
 
     python3 video.py
+    
 #### Cơ sở dữ liệu
 
 - Trong file database cùng tên (dùng Xampp Mysql) (nếu đổi tên csdl thì vào file video.py)
@@ -21,8 +18,7 @@
 
 - app.config['MYSQL_DATABASE_DB']= 'ten csdl mới'
 
-- Database: phude.sql
-
+- Database: subtitle.sql
 
 #### Url: đường đẫn file (.mp4) 
 
@@ -79,16 +75,13 @@
 
 =>Not parameter -noise because choose_noise is 'no'
 
-#### Tính phần trăm cosine
+#### Tính phần trăm cosine (độ tương đồng)
 
     python3 comparison_log -train train -compare template_log
 
 - train: tham số tryền vào là thư mục cần so sánh với file gốc (trong đó train: là thư mục sau khi tạo phụ đề cần so sánh với nội dung gốc)
 
 - compare: tham số truyền vào là thư mục file gốc (fileSoSanh: là thư mục có nội dung gốc)
-
-
-
 
 #### Cấu trúc thư mục  
 
