@@ -19,9 +19,9 @@ from googletrans import Translator
 import pysrt
 import six
 
-GOOGLE_SPEECH_API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw"
-GOOGLE_SPEECH_API_URL = "http://www.google.com/speech-api/v2/recognize?client=chromium&lang={lang}&key={key}" # pylint: disable=line-too-long
-DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+GOOGLE_SPEECH_API_KEY = ""
+GOOGLE_SPEECH_API_URL = "" # pylint: disable=line-too-long
+DEFAULT_USER_AGENT = ''
 
 
 arraylist_language_code = []
