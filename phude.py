@@ -1,7 +1,7 @@
 import argparse
 import os,sys
-import createsub
-
+# import createsub
+import sub as createsub
 from regex import F
 from datetime import datetime
 from srtToTxt import srt_to_txt

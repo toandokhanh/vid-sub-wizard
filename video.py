@@ -67,14 +67,10 @@ def check_dk():
 
 def check_name():
     user = session['user']
-
     conn = mysql.connect()
-    
     cursor3 = conn.cursor(pymysql.cursors.DictCursor)
-    
     cursor3.execute("SELECT output_srt FROM ketquataophude WHERE username=%s",(user) )
     ta = cursor3.fetchall()
-    
     fullname = []
     for t in ta:
         # print(t['output_srt'])
@@ -120,7 +116,6 @@ def login():
     return render_template('login.html')
 @app.route('/signup',methods=['POST','GET'])
 def signup():
-    
     if "user" in session:
         return redirect(url_for('login'))
     if request.method == 'POST':
@@ -149,9 +144,6 @@ def signup():
             return redirect(url_for('index'))
         else:
             flash("Account already exists!")
-
-
-        
     return render_template('signup.html')
 
 def login(err):
@@ -453,8 +445,6 @@ def create_srt(filename):
         if "_translated" in path_save_video_new:
             path_save_video_new = path_save_video_new.replace("_translated", "")
         os.system(f'ffmpeg -y -i {path_video} -filter_complex "subtitles={path_srt}" {path_save_video_new}')
-
-        
         
     # return render_template('test.html',name=path_video,age=path_srt,a=path_save_video_new)
     # return loading(filename)
