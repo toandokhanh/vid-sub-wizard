@@ -1,474 +1,257 @@
-from flask import Flask,redirect,url_for,render_template,request,send_file,flash,session,send_from_directory,abort
-from flask_wtf import FlaskForm
-from wtforms import FileField, SubmitField,SelectField,StringField
-from werkzeug.utils import secure_filename
-from wtforms.validators import InputRequired
-from flaskext.mysql import MySQL
-import pymysql
+"""Local web interface for the historical subtitle experiments."""
 import os
+import re
 import shutil
-import hashlib
-import time
-import pysrt
+import subprocess
+import sys
+import threading
+from pathlib import Path
+from uuid import uuid4
+
 import codecs
-import sqlite3
-from io import BytesIO
-from datetime import datetime
+import pymysql
+import pysrt
+from flask import Flask, abort, flash, redirect, render_template, request, send_from_directory, session, url_for
+from flask_wtf import FlaskForm, CSRFProtect
+from flaskext.mysql import MySQL
+from werkzeug.security import generate_password_hash, check_password_hash
+from wtforms import FileField, SelectField, StringField, SubmitField
+from wtforms.validators import InputRequired, Length
+from security import load_env, filename
 
-app = Flask(__name__,template_folder="templates",static_folder="static")
-app.config['SECRET_KEY'] = "REDACTED_ROTATE_OLD_SECRET"
-app.config['SOURCE'] = "static/video/"
-app.config['UPLOAD_FOLDER'] = 't2/'
-app.config['time_start'] = ''
-app.config['VIDEO'] = 'video/'
-app.config['ALLOWED_VIDEO_EXTENSION'] = [".MP4",'.mp4']
-mysql = MySQL()
+HERE = Path(__file__).resolve().parent
+load_env(HERE / ".env")
+app = Flask(__name__)
+secret = os.environ.get("SECRET_KEY", "")
+if len(secret) < 32:
+    raise RuntimeError("Set SECRET_KEY to a new random value of at least 32 characters")
+app.config.update(
+    SECRET_KEY=secret,
+    MAX_CONTENT_LENGTH=256 * 1024 * 1024,
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Strict",
+    SESSION_COOKIE_SECURE=os.environ.get("COOKIE_SECURE") == "true",
+    MYSQL_DATABASE_USER=os.environ.get("DB_USERNAME", "subtitle"),
+    MYSQL_DATABASE_PASSWORD=os.environ.get("DB_PASSWORD", ""),
+    MYSQL_DATABASE_DB=os.environ.get("DB_NAME", "subtitle"),
+    MYSQL_DATABASE_HOST=os.environ.get("DB_HOST", "127.0.0.1"),
+    SOURCE=str(HERE / "static/video"),
+    UPLOAD_FOLDER=str(HERE / "t2"),
+)
+CSRFProtect(app)
+mysql = MySQL(app)
+job_lock = threading.Lock()
 
 
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD']= ''
-app.config['MYSQL_DATABASE_DB']='subtitle'
-app.config['MYSQL_DATABASE_HOST']='localhost'
-mysql.init_app(app)
-
-# today = datetime.today()
-
-# time = today.strftime("%H") + "h" + today.strftime("%M")
-# date = today.strftime("%Y-%m-%d") 
-
-# dateVN = today.strftime("%d-%m-%Y")
-
-# days = f'{time}- {dateVN}'
-
-
-# Get number data of database
-def get_num_of_items():
-
+def query(sql, values=(), write=False):
     conn = mysql.connect()
-    cursor1 = conn.cursor()
-
-    
-    user = session['user']
-    cur = cursor1.execute("SELECT * FROM ketquataophude WHERE username=%s",user)
-    return (cur)
-
-def check_dk():
-    conn = mysql.connect()
-    
-    cursor3 = conn.cursor(pymysql.cursors.DictCursor)
-    
-    cursor3.execute("SELECT username FROM user")
-    users = cursor3.fetchall()
-    user_list = []
-    for u in users:
-        if u:
-            user_list.append(u['username'])
-    return user_list
-
-def check_name():
-    user = session['user']
-    conn = mysql.connect()
-    cursor3 = conn.cursor(pymysql.cursors.DictCursor)
-    cursor3.execute("SELECT output_srt FROM ketquataophude WHERE username=%s",(user) )
-    ta = cursor3.fetchall()
-    fullname = []
-    for t in ta:
-        # print(t['output_srt'])
-        name = os.path.splitext(t['output_srt'])[0]
-        fullname.append(name)
-    return fullname
-
-
-@app.route("/",methods=["GET","POST"])
-def home():
-    return render_template('home.html')
-@app.route("/login",methods=["Get","POST"])
-def login():
-    if "user" in session:
-        return redirect(url_for("index"))
-    if request.method == "POST":
-        username = request.form['username']
-        password = hashlib.md5(request.form['password'].encode())
     try:
-        conn = mysql.connect()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT * from user WHERE username=%s",username)
-        userlist = cursor.fetchall()
-        if not userlist:
-            flash("Incorrect account or password!") # sai tk hoặc mk
-        name = userlist[0]['username']
-        pass_word = userlist[0]['password']
-        password = password.hexdigest()
-        if username == name and password == pass_word:
-                session['user'] = username
-                flash("Logged in successfully") 
-                return redirect(url_for("index"))
-        else:
-            flash("Incorrect account or password!")
-            
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()       
-    
-        
-    return render_template('login.html')
-@app.route('/signup',methods=['POST','GET'])
-def signup():
-    if "user" in session:
-        return redirect(url_for('login'))
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        password2 = request.form['password2']
-
-        if len(username) < 4:
-            flash('Username must be at least 4 characters!')
-            return redirect(url_for('signup'))
-        if len(password) < 6:
-            flash('Password at least 6 characters!')
-            return redirect(url_for('signup'))
-        if len(password2) < 6:
-            flash('Password at least 6 characters!')
-        if password != password2:
-            flash('Password does not match!')
-            return redirect(url_for('signup'))
-        if username not in check_dk():
-            conn = mysql.connect()
-            cursor = conn.cursor(pymysql.cursors.DictCursor)
-            cursor.execute("INSERT INTO user(username,password) VALUES(%s,MD5(%s))",(username,password))
+        with conn.cursor(pymysql.cursors.DictCursor) as cursor:
+            cursor.execute(sql, values)
+            result = cursor.fetchall() if not write else None
+        if write:
             conn.commit()
-            session['user'] = username
-            flash("Sign Up successfully")
-            return redirect(url_for('index'))
-        else:
-            flash("Account already exists!")
-    return render_template('signup.html')
+        return result
+    finally:
+        conn.close()
 
-def login(err):
-    return render_template("login.html",err)
+
+def owned_result(name):
+    filename(name)
+    rows = query("SELECT * FROM ketquataophude WHERE username=%s AND output_mp4=%s", (session["user"], name))
+    if not rows:
+        abort(404)
+    return rows[0]
+
+
+@app.before_request
+def require_login():
+    if request.endpoint in {"home", "login", "signup"}:
+        return None
+    if request.endpoint == "static":
+        name = request.view_args.get("filename", "")
+        if not name.startswith("video/"):
+            return None
+        if "user" not in session:
+            abort(401)
+        name = name.removeprefix("video/")
+        filename(name, Path(name).suffix)
+        rows = query("SELECT output_mp4, output_srt FROM ketquataophude WHERE username=%s", (session["user"],))
+        if not any(name in {row["output_mp4"], row["output_srt"], Path(row["output_mp4"]).stem + "_out.mp4"} for row in rows):
+            abort(404)
+        return None
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+
+@app.get("/")
+def home():
+    return render_template("home.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("username", "")
+        password = request.form.get("password", "")
+        rows = query("SELECT * FROM user WHERE username=%s", (username,))
+        stored = rows[0]["password"] if rows else ""
+        # Legacy MD5/plaintext accounts must be reset; never accept weak hashes.
+        if stored.startswith("pbkdf2:") and len(password) <= 128 and check_password_hash(stored, password):
+            session.clear()
+            session["user"] = username
+            return redirect(url_for("index"))
+        flash("Invalid credentials. Legacy demo accounts must be recreated.")
+    return render_template("login.html")
+
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        username = request.form.get("username", "")
+        password = request.form.get("password", "")
+        if not re.fullmatch(r"[A-Za-z0-9_.-]{4,50}", username) or not 12 <= len(password) <= 128 or password != request.form.get("password2"):
+            flash("Use a valid username and matching passwords of 12–128 characters.")
+            return render_template("signup.html")
+        if query("SELECT username FROM user WHERE username=%s", (username,)):
+            flash("Account already exists")
+            return render_template("signup.html")
+        query("INSERT INTO user(username,password) VALUES(%s,%s)", (username, generate_password_hash(password, method="pbkdf2:sha256:600000")), write=True)
+        session.clear()
+        session["user"] = username
+        return redirect(url_for("index"))
+    return render_template("signup.html")
 
 
 class UploadFileForm(FlaskForm):
-    file = FileField("File",validators=[InputRequired()])
-    conn = mysql.connect()
-    cursor = conn.cursor(pymysql.cursors.DictCursor)
-    cursor.execute("SELECT * from ngonngu")
-    languages  = cursor.fetchall()
-    language_l = []
-    file_noise = []
-    for langs in languages:
-        lang = (langs['ma_nn'],langs['ten_nn'])
-        language_l.append(lang)
-    language_list = [(None,'Select language')]
-    language_list.extend(language_l)
-
-    cursor2 = conn.cursor(pymysql.cursors.DictCursor)
-    cursor2.execute("SELECT * FROM giaithuatnhieu")
-    noises = cursor2.fetchall()
-
-    for noise in noises:
-        reduce = (noise['ma_gt'],noise['ten_gt'])
-        file_noise.append(reduce)
-    
-    language = SelectField("Ngôn ngữ ", choices=language_list)
-    language2 = SelectField("Ngôn ngữ 2",choices=language_list)
-    name = StringField(u'Tên bài',validators=[InputRequired()])
-    algorithm = SelectField("Giảm nhiễu",choices=file_noise)
+    file = FileField("File", validators=[InputRequired()])
+    language = SelectField("Source language", validators=[InputRequired()])
+    language2 = SelectField("Target language", validators=[InputRequired()])
+    name = StringField("Title", validators=[InputRequired(), Length(max=100)])
+    algorithm = SelectField("Noise reduction", validators=[InputRequired()])
     submit = SubmitField("Create subtitles")
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        langs = [(row["ma_nn"], row["ten_nn"]) for row in query("SELECT * FROM ngonngu")]
+        self.language.choices = langs
+        self.language2.choices = langs
+        self.algorithm.choices = [(row["ma_gt"], row["ten_gt"]) for row in query("SELECT * FROM giaithuatnhieu")]
+
+
 class DownloadFile(FlaskForm):
-    submit2 = SubmitField("download subtitles (.srt)")
+    submit2 = SubmitField("Download subtitles (.srt)")
 
 
-@app.route("/index",methods=["POST","GET"])
-
+@app.route("/index", methods=["GET", "POST"])
 def index():
-    
-    print(check_name())
-   
-    if "user" not in session:
-        return redirect(url_for("login"))
-    
     form = UploadFileForm()
-    if "user" in session:
-        user = session["user"]
-    
-    
-   
     if form.validate_on_submit():
-
-        source = app.config['SOURCE']
-        PATH = app.config['UPLOAD_FOLDER']
-
-        conn = mysql.connect()
-
-        start_time = datetime.now()
-        
-        
-        file = form.file.data
-        filename = file.filename
-        name = filename[:filename.index('.mp4')]
-        language_in = form.language.data
-        language_out = form.language2.data
-        choose_algorithm = form.algorithm.data
-        file_ext = filename[filename.index('.'):]
-        newname = form.name.data
-      
-        if file_ext not in app.config['ALLOWED_VIDEO_EXTENSION']:
-            flash("Invalid file format!")# Định dạng file không hợp lệ!
-            return redirect(url_for('index'))
-        
-        if newname in check_name():
-            flash("Filename already exists! Please choose a new name")# Tên file đã tồn tại!Vui lòng chọn tên mới
-            return redirect(url_for('index'))
-        if language_in == 'None':
-            flash("Select the original language")
-            return redirect(url_for('index'))
-        if language_out == 'None':
-            flash("Select output language") #Chọn ngôn ngữ đầu ra
-            return redirect(url_for('index'))
-        os.makedirs(PATH, exist_ok=True)
-        # Thời gian bắt đầu thực thi
-        start_time = time.time()
-        file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
-        file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['SOURCE'],secure_filename(file.filename)))
-       
-        print('PATH+file.filename')
-        print(PATH+file.filename)
-        print('language_in')
-        print(language_in)
-        print('language_out')
-        print(language_out)
-        os.system('python3 phude.py {} -s {} -d {} -noise {} -n {} '.format(PATH+file.filename,language_in,language_out,choose_algorithm,newname))
-
-        if language_in == language_out:
-            file_srt = newname + '.srt' 
-            shutil.move(PATH+file_srt, source)
-        else:
-            file_srt_org = newname + '.srt'   
-            file_srt = newname + '_translated.srt'
-            shutil.move(PATH+file_srt_org, source)
-            shutil.move(PATH+file_srt, source)
-        # 
-        file_output = newname + '.mp4'
-        shutil.move(PATH+file_output, source)
-
-        # Thời gian kết thúc
-        if language_in != language_out: 
-            os.system('ffmpeg -y -i {} -filter_complex "subtitles={}" {}'.format(PATH+file.filename,source+newname+'.srt',source+newname+'_out.mp4'))
-        end_time = time.time()
-        time_xuly = round(float(end_time-start_time),2)
-        
-        # print(str(end_time - start_time))
-        # Kiểm tra file có tồn tại hay không
-        if os.path.isfile(f"t2/{newname}.txt"):
-            # Nếu có, đọc toàn bộ nội dung từ file và gán cho biến text
-            with open(f"t2/{newname}.txt", "r") as f:
-                text = f.read()
-                print(text)
-        else:
-            # Nếu không tìm thấy file, in ra thông báo lỗi
-            print("File not found.")
-        cursor1 = conn.cursor(pymysql.cursors.DictCursor)
-        directory = "static/video/"
-        if os.path.isfile(directory + newname + '_translated.srt'):
-            srt_name = newname + '_translated.srt'
-        else:
-            srt_name = newname + '.srt'
-        cursor1.execute("INSERT INTO ketquataophude(name_video,username,ma_gt,ma_nn_input,ma_nn_output,thoigianxuly,output_srt,output_mp4,output_txt) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)",(filename,user,choose_algorithm,language_in,language_out,time_xuly,srt_name,newname+'.mp4',text))
-        # userlist = cursor1.fetchall()
-        conn.commit()
-        # if os.path.exists(PATH):
-        #     shutil.rmtree(PATH)
-       
-        return redirect(url_for("loading",filename=newname+'.mp4'))
-    return render_template('index.html',form=form)
+        import time
+        video = form.file.data
+        header = video.stream.read(12)
+        video.stream.seek(0)
+        if not video.filename.lower().endswith(".mp4") or header[4:8] != b"ftyp":
+            abort(400, "Upload an MP4 video")
+        if not job_lock.acquire(blocking=False):
+            abort(429, "Subtitle worker is busy")
+        try:
+            source = Path(app.config["SOURCE"])
+            uploads = Path(app.config["UPLOAD_FOLDER"])
+            source.mkdir(parents=True, exist_ok=True)
+            uploads.mkdir(parents=True, exist_ok=True)
+            input_name, output_name = uuid4().hex + ".mp4", uuid4().hex
+            video.save(uploads / input_name)
+            start = time.monotonic()
+            subprocess.run([sys.executable, str(HERE / "phude.py"), str(uploads / input_name),
+                            "-s", form.language.data, "-d", form.language2.data,
+                            "-noise", form.algorithm.data, "-n", output_name], cwd=HERE, check=True, timeout=1800)
+            subtitle = output_name + (".srt" if form.language.data == form.language2.data else "_translated.srt")
+            shutil.move(str(uploads / subtitle), source / subtitle)
+            shutil.move(str(uploads / (output_name + ".mp4")), source / (output_name + ".mp4"))
+            text_path = uploads / (output_name + ".txt")
+            text = text_path.read_text(encoding="utf-8") if text_path.is_file() else ""
+            query("INSERT INTO ketquataophude(name_video,username,ma_gt,ma_nn_input,ma_nn_output,thoigianxuly,output_srt,output_mp4,output_txt) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                  (input_name, session["user"], form.algorithm.data, form.language.data, form.language2.data,
+                   round(time.monotonic() - start, 2), subtitle, output_name + ".mp4", text), write=True)
+            return redirect(url_for("loading", filename=output_name + ".mp4"))
+        finally:
+            job_lock.release()
+    return render_template("index.html", form=form)
 
 
-
-@app.route("/loading/<filename>",methods = ["POST","GET"])
-
+@app.route("/loading/<filename>", methods=["GET", "POST"])
 def loading(filename):
-    
-    if "user" not in session:
-        return redirect(url_for("login"))
-    if "user" in session:
-        user = session["user"]
-    down = DownloadFile()
-    conn = mysql.connect()
-    cursor3 = conn.cursor(pymysql.cursors.DictCursor)
-    name = filename[:filename.index('.mp4')]
-
-    cursor3.execute("SELECT * FROM ketquataophude WHERE username=%s and output_mp4=%s",(user,filename) )
-    historys = cursor3.fetchall()
-    PATH = app.config['UPLOAD_FOLDER']
-    SOURCE =app.config['VIDEO']
-    flash(filename)
-    redirect(url_for("loading",filename=PATH+filename),code=301)
-    if historys:
-        lang_in = historys[0]['ma_nn_input']
-        lang_out = historys[0]['ma_nn_output']
-        nn = lang_out+'/'+lang_in
-        session['nn'] = nn
-    if down.validate_on_submit():
-            lang_in = historys[0]['ma_nn_input']
-            lang_out = historys[0]['ma_nn_output']
-            if lang_in == lang_out:
-                srt = (filename[:filename.index(".mp4")]+'.srt')
-                return send_from_directory(app.config['SOURCE'],srt,as_attachment=True)
-            else:
-                srt = (filename[:filename.index(".mp4")]+'_translated.srt')
-                return send_from_directory(app.config['SOURCE'],srt,as_attachment=True)
-    lang_in = historys[0]['ma_nn_input']
-    lang_out = historys[0]['ma_nn_output']
-    if lang_in == lang_out:
-        srt_name = (filename[:filename.index(".mp4")]+'.srt')
-    else:
-        srt_name = (filename[:filename.index(".mp4")]+'_translated.srt')
-    
-
-    srt_path = os.path.join('static', 'video', srt_name)
-    render_srt = ''
-
-    if os.path.exists(srt_path):
-        with codecs.open(srt_path, 'r', 'utf-8') as f:
-            render_srt = f.read()
-    else:
-        print(f'File {srt_path} does not exist.')
-    
-    srt_path = os.path.join('static', 'video', srt_name)
-        # Mở file SRT và trích xuất thông tin về thời gian và nội dung phụ đề
-    subs = pysrt.open(srt_path)
-    subtitles = []
-    for sub in subs:    
-        start_time = sub.start.to_time()
-        end_time = sub.end.to_time()
-        text = sub.text
-        subtitles.append({'start_time': start_time, 'end_time': end_time, 'text': text})
-    count = 0
-    timestamp = int(time.time())
-    return render_template("loading.html",down=down,filename=SOURCE+filename,subtitles=subtitles,srt_name=srt_name, timestamp=timestamp,count=count)
+    row = owned_result(filename)
+    srt_name = row["output_srt"]
+    form = DownloadFile()
+    if form.validate_on_submit():
+        return send_from_directory(app.config["SOURCE"], srt_name, as_attachment=True)
+    subs = pysrt.open(str(Path(app.config["SOURCE"]) / srt_name))
+    subtitles = [{"start_time": sub.start.to_time(), "end_time": sub.end.to_time(), "text": sub.text} for sub in subs]
+    return render_template("loading.html", down=form, filename="video/" + filename,
+                           subtitles=subtitles, srt_name=srt_name, timestamp=uuid4().hex, count=0)
 
 
-@app.route("/dangxuat")
-
+@app.post("/dangxuat")
 def dangxuat():
-    if "user" not in session:
-        redirect(url_for("login"))
-    if "user" in session:
-        session.pop("user",None)
-        flash("Sign out successful!")
+    session.clear()
     return redirect(url_for("login"))
-# def success():
-#     return render_template("success.html")
 
-@app.route("/lichsu")
 
+@app.get("/lichsu")
 def lichsu():
-    try:
-        if "user" in session:
-            user = session["user"]
+    rows = query("SELECT * FROM ketquataophude WHERE username=%s", (session["user"],))
+    return render_template("lichsu.html", data=rows, quantity=len(rows))
 
-        conn = mysql.connect()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT * FROM user WHERE username=%s",user)
-        userlist = cursor.fetchall()
 
-        cursor1 = conn.cursor(pymysql.cursors.DictCursor)
-        cursor1.execute("SELECT * FROM ketquataophude WHERE username=%s",userlist[0]['username'])
-        userlist1 = cursor1.fetchall()
-
-       
-        quantity = get_num_of_items()
-
-        return render_template("lichsu.html",data=userlist1,quantity=quantity)
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()  
-    return render_template("lichsu.html")
-
-@app.route("/xoa/<filename>",methods=['POST','GET'])
-
+@app.post("/xoa/<filename>")
 def xoa(filename):
-    if "user" not in session:
-        return redirect(url_for("login"))
-    if "user" in session:
-        user = session["user"]
-    conn = mysql.connect()
-    name = filename[:filename.index('.mp4')]
-    source = app.config['SOURCE']
-    if os.path.exists(source+filename):
-        os.remove(source+filename)
-    if os.path.exists(source+name+'.srt'):
-        os.remove(source+name+'.srt')
-    cursor3 = conn.cursor(pymysql.cursors.DictCursor)
-    cursor3.execute("DELETE FROM ketquataophude WHERE username=%s and output_mp4=%s",(user,filename))
-    conn.commit()
-    flash("File {} was deleted successfully".format(filename))
-    return redirect(url_for('lichsu'))
+    row = owned_result(filename)
+    for name in [row["output_mp4"], row["output_srt"]]:
+        candidate = Path(app.config["SOURCE"]) / name
+        if candidate.resolve().parent != Path(app.config["SOURCE"]).resolve():
+            abort(400)
+        candidate.unlink(missing_ok=True)
+    query("DELETE FROM ketquataophude WHERE username=%s AND output_mp4=%s", (session["user"], filename), write=True)
+    return redirect(url_for("lichsu"))
 
 
-@app.route("/create-srt/<filename>", methods=["POST"])
-    
+@app.post("/create-srt/<filename>")
 def create_srt(filename):
-    
-    srt_name = request.form.get('name_srt')
-    path_srt = os.path.join('static','video',srt_name)
-    # Kiểm tra và xóa file nếu đã tồn tại   
-    if os.path.exists(path_srt):
-        os.remove(path_srt) # xoa bỏ nếu tồn tại
-
-    with codecs.open(path_srt, 'w', encoding='utf-8') as f:
-        for i in range(len(request.form)//3):
-            start_time = request.form.get(f'start_{i+1}')
-            end_time = request.form.get(f'end_{i+1}')
-            text = request.form.get(f'text_{i+1}')
-            f.write(f'{i+1}\n{start_time} --> {end_time}\n{text}\n\n')
-    conn = mysql.connect()
-    cursor1 = conn.cursor()
-    cursor = conn.cursor()
-    cursor.execute("SELECT name_video FROM ketquataophude WHERE output_srt='" + srt_name + "'")
-    results = cursor.fetchall()
-    for row in results:
-        name_video = row[0]
-    conn.close()
-    path_video = os.path.join('t2',name_video)
-    path_save_video_new = path_srt.replace('.srt', '.mp4')
-    if os.path.exists(path_video):
-        # path_video -> path dẫn đến video gốc
-        # path_srt -> path dẫn đế file srt_name
-        # path_save_video_new -> path dẫn đến video 
-        if "_translated" in path_save_video_new:
-            path_save_video_new = path_save_video_new.replace("_translated", "")
-        os.system(f'ffmpeg -y -i {path_video} -filter_complex "subtitles={path_srt}" {path_save_video_new}')
-        
-    # return render_template('test.html',name=path_video,age=path_srt,a=path_save_video_new)
-    # return loading(filename)
-    print('path_srt')
-    print(path_srt)
-    print('path_save_video_new')
-    print(path_save_video_new)
-    return redirect(url_for('loading', filename=filename))
+    row = owned_result(filename)
+    target = Path(app.config["SOURCE"]) / row["output_srt"]
+    if target.resolve().parent != Path(app.config["SOURCE"]).resolve():
+        abort(400)
+    indices = sorted(int(m.group(1)) for key in request.form for m in [re.fullmatch(r"start_(\d+)", key)] if m)
+    if len(indices) > 10000:
+        abort(400)
+    chunks = []
+    for index in indices:
+        start, end = request.form.get(f"start_{index}"), request.form.get(f"end_{index}")
+        if not all(isinstance(t, str) and re.fullmatch(r"\d{2}:\d{2}:\d{2}[,.]\d{3}", t) for t in [start, end]):
+            abort(400, "Invalid subtitle time")
+        text = request.form.get(f"text_{index}", "")
+        chunks.append(f"{index}\n{start.replace('.', ',')} --> {end.replace('.', ',')}\n{text}\n\n")
+    video = Path(app.config["UPLOAD_FOLDER"]) / row["name_video"]
+    if video.resolve().parent != Path(app.config["UPLOAD_FOLDER"]).resolve():
+        abort(400)
+    if not job_lock.acquire(blocking=False):
+        abort(429)
+    pending = target.with_name(target.stem + "_pending.srt")
+    output = Path(app.config["SOURCE"]) / (Path(filename).stem + "_pending.mp4")
+    try:
+        pending.write_text("".join(chunks), encoding="utf-8")
+        subprocess.run(["ffmpeg", "-y", "-i", str(video), "-vf", "subtitles=" + pending.name, str(output)],
+                       cwd=app.config["SOURCE"], check=True, timeout=1800)
+        output.replace(Path(app.config["SOURCE"]) / filename)
+        pending.replace(target)
+    finally:
+        pending.unlink(missing_ok=True)
+        output.unlink(missing_ok=True)
+        job_lock.release()
+    return redirect(url_for("loading", filename=filename))
 
 
-
-@app.route("/test",methods = ["POST","GET"])
-def test():
-    if request.method == "POST":
-        name = request.form['name']
-        age = request.form['age']
-        return render_template('test.html',name=name, age=age)
-    return render_template('test.html')
-#
 if __name__ == "__main__":
-    # app.run(debug=True)
-    app.run(debug=True,host='127.0.0.1',port=5003)\
-    
-
-
-
-
+    app.run(host="127.0.0.1", port=5003)

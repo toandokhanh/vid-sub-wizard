@@ -1,6 +1,1 @@
-*.scss linguist-language=Python
-*.py linguist-language=Python
-*.html linguist-language=HTML
-*.css linguist-language=CSS
-*.js linguist-language=JavaScript
-*.sh linguist-language=Shell
+*.ipynb linguist-language=Python

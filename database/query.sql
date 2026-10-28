@@ -39,7 +39,7 @@ CREATE TABLE `lichsu` (
 -- Đang đổ dữ liệu cho bảng `lichsu`
 --
 
--- Historical account and processing rows removed.
+-- User and processing-history rows omitted; create your own local demo account.
 
 -- --------------------------------------------------------
 
@@ -50,14 +50,14 @@ CREATE TABLE `lichsu` (
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(59) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `user`
 --
 
--- Historical account and processing rows removed.
+-- User and processing-history rows omitted; create your own local demo account.
 
 --
 -- Chỉ mục cho các bảng đã đổ

@@ -3,13 +3,13 @@
 %}
 
 <style>
-  
+
 </style>
 <ul class="flash">
   <li>{{ messages[0] }}</li>
 </ul>
 {% endif %} {% endwith %}
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">   
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <div class="container_index">
   <div class="nav_index">
     <a href="/" class="href" style="color:
@@ -36,7 +36,7 @@
     </h2>
     <br>
     <br>
-    <form method="POST" autocomplete="off">
+    <form method="POST" autocomplete="off"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="form-group">
         <!-- <p>Tên đăng nhập</p> -->
         <input type="text" name="username" id="username" required placeholder="Username"/>

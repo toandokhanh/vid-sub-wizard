@@ -24,7 +24,7 @@
 <div class="container">
   <div class="left">
     <div id="wrapper" style="border: 3px solid black;"">
-      <form action="{{ url_for('create_srt', filename=filename.split("/")[-1]) }}" method="POST" class="index fixindex"> 
+      <form action="{{ url_for('create_srt', filename=filename.split("/")[-1]) }}" method="POST" class="index fixindex"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <table id="keywords" cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
@@ -39,7 +39,7 @@
               {% set count = loop.index %}
               <tr data-index="{{ count }}">
                 <td><input type="text" name="start_{{ count }}" value="{{ sub.start_time.strftime('%H:%M:%S,%f')[:-3] }}" step="0.001" ></td>
-                <td><input type="text" name="end_{{ count }}" value="{{ sub.end_time.strftime('%H:%M:%S,%f')[:-3] }}" step="0.001" ></td>                  
+                <td><input type="text" name="end_{{ count }}" value="{{ sub.end_time.strftime('%H:%M:%S,%f')[:-3] }}" step="0.001" ></td>
                 <td style="position: relative;"><textarea rows="4" cols="30" name="text_{{ count }}" required">{{ sub.text }}</textarea>
                   <span style="font-size: 8px; color: #6244c5; margin-top: -100px; position: absolute; top:143%;left:-380px; cursor: pointer; font-size: 12px; font-weight: 700;">{{ count }}</span>
                   <span style="font-size: 8px; color: #6244c5; margin-top: -100px; position: absolute; top:120%;right: -10px; cursor: pointer;"><i class="fa fa-plus fa-2x"></i></span>
@@ -52,11 +52,11 @@
         <input type="text" name="name_srt" value="{{ srt_name }}" hidden>
         <input style="margin: 0px 235px;cursor: pointer; background-color: #533aa7; color: #ffffff;" class="change" id="submit" type="submit" value="Update subtitle">
         <p></p>
-    </form>        
+    </form>
   </div>
-  <form method="POST" enctype="multipart/form-data">
+  <form method="POST" enctype="multipart/form-data"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {{down.hidden_tag()}} {{down.submit2()}}
-  </form> 
+  </form>
   </div>
 <div class="right">
   <video id="my-video-player" style="border: 3px solid black;" width="860" height="530" controls>
@@ -74,10 +74,10 @@
   $(document).ready(function() {
   // thêm row mới
   $(document).on('click', '.fa-plus', function() {
-    
+
     var currentRow = $(this).closest('tr');
     var countjs = $('#keywords tbody tr').length + 1; // Lấy số lượng hàng hiện tại và cộng thêm 1 cho hàng mới
-    
+
     var newRow = $(
     '{% set sorted_subs = subtitles|sort(attribute="start_time") %}' +
     '<tr data-index="' + countjs + '">'+ // Sử dụng giá trị động ở đây
@@ -89,7 +89,7 @@
       '<span style="font-size: 8px; color: #b93a3c; margin-top: -100px; position: absolute; top:165%;right: -10px; cursor: pointer;"><i class="fa fa-times fa-2x"></i></span>' +
       '</td>' +
     '</tr>');
-    
+
     currentRow.after(newRow);
   });
 
@@ -102,7 +102,7 @@
 $(document).on('click', '.fa-times', function() {
   var row = $(this).closest('tr');
   var index = row.data('index');
-  
+
   // Xóa các hàng sau hàng bị xóa
   row.nextAll().each(function() {
     var nextIndex = $(this).data('index');
@@ -112,7 +112,7 @@ $(document).on('click', '.fa-times', function() {
     $(this).find('[name^="text_"]').attr('name', 'text_' + (nextIndex - 1));
     $(this).find('span:first-child').text(nextIndex - 1);
   });
-  
+
   // Xóa hàng bị xóa
   row.remove();
 });

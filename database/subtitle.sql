@@ -14,7 +14,7 @@
   ('no', 'Không chọn giải thuật nhiễu'),
   ('noise', 'Giải thuật NoiseReduce');
 
-  
+
 
   CREATE TABLE `ketquataophude` (
     `name_video` varchar(50) NOT NULL,
@@ -123,12 +123,11 @@
 
   CREATE TABLE `user` (
     `username` varchar(50) NOT NULL,
-    `password` varchar(50) NOT NULL
+    `password` varchar(255) NOT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-  INSERT INTO `user` (`username`, `password`) VALUES
-  ('toan', '202cb962ac59075b964b07152d234b70');
-  
+  -- User and processing-history rows omitted; create your own local demo account.
+
   ALTER TABLE `giaithuatnhieu`
     ADD PRIMARY KEY (`ma_gt`);
 

@@ -1,3 +1,5 @@
+import subprocess
+import shlex
 import argparse
 import os,sys
 # import createsub
@@ -31,10 +33,10 @@ args = parser.parse_args()
 
 def mp4_to_wav(filename,output,name):
     # name = filename[filename.index('/'):filename.[]]
-    os.system('ffmpeg -i {} -ar 44100 {}/{}.wav'.format(filename,output,name))
+    subprocess.run(shlex.split('ffmpeg -i {} -ar 44100 {}/{}.wav'.format(filename, output, name)), check=True, timeout=1800)
 
 def noise_deepfilternet(file,file_out):
-    os.system('deepFilter {} -o {}'.format(file,file_out))
+    subprocess.run(shlex.split('deepFilter {} -o {}'.format(file, file_out)), check=True, timeout=1800)
     print("Đã giảm tiếng ồn DeepFilterNet")
 
 
@@ -44,10 +46,10 @@ def noise_reduce(file,file_out):
     sf.write(file_out,reduced_noise, sr, subtype='PCM_24')
     print('Đã giảm tiếng ồn xong!')
 
-def rename(filename,newname): 
+def rename(filename,newname):
     os.rename(filename, newname)
 
-try: 
+try:
     newname = args.new_name
 
     noises = args.algorithm_noise
@@ -61,34 +63,34 @@ except:
     print('')
 
 def wav_to_flac(filename,output):
-    os.system('ffmpeg -y -f wav -i {} -write_xing 0 -f flac {}'.format(filename,output))
+    subprocess.run(shlex.split('ffmpeg -y -f wav -i {} -write_xing 0 -f flac {}'.format(filename, output)), check=True, timeout=1800)
 
 
 def videoOutput(file_in,file_srt,file_out):
-        os.system('ffmpeg -y -i {} -filter_complex "subtitles={}" {}'.format(file_in,file_srt,file_out))
+        subprocess.run(shlex.split('ffmpeg -y -i {} -filter_complex "subtitles={}" {}'.format(file_in, file_srt, file_out)), check=True, timeout=1800)
 
 
 if __name__ == "__main__":
-    
+
         # start_time = time.time()
         start_time = datetime.now()
 
         # Lấy ra đường dẫn chứa file
-        path = os.path.dirname(directory) + '/' 
+        path = os.path.dirname(directory) + '/'
         # Lấy ra tên file nhập vào có cả duôi file
         file = os.path.basename(directory)
 
         # Lấy ra tên file
         name1 = os.path.splitext(file)
         name = name1[0]
-        
-        
+
+
         # if not (os.path.exists(path)):
-        #     os.mkdir(path) 
+        #     os.mkdir(path)
         mp4_to_wav(path+file,path,name)
         if not newname:
             newname = name
-        
+
         if noises:
             # Giảm nhiễu dùng thuật toán deepfilter
             if noises == 'deep':
@@ -107,7 +109,7 @@ if __name__ == "__main__":
                 rename(path+name+'.wav',path+newname+'.wav')
                 pass
         source = path+newname+'.wav'
-        
+
 
         # Tạo phụ đề
         createsub.main(source,lang_in,lang_out)
@@ -130,14 +132,14 @@ if __name__ == "__main__":
                 videoOutput(path+file,path+newname+'_translated.srt',path+newname+'_output.mp4')
 
 
-        
+
         # end_time = time.time()
         end_time = datetime.now()
 
         print(str(end_time-start_time))
 
         print("Tạo phụ đề thành công")
-        
+
 
 
 

@@ -1,4 +1,4 @@
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">   
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <div class="container_index">
   <div class="nav_index">
@@ -16,7 +16,7 @@
     0px 0px 16px"
     ><i class="fa fa-home" aria-hidden="true"></i>    Home Page</a
   >
-  
+
   <a href="/index" class="href" style="color:
     #ffffff;
     font-family:
@@ -46,7 +46,7 @@
       <i class="fa fa-history"></i>
         History</a
     >
-    
+
   </div>
   <div class="profile">
     <div class="account" style="color:
@@ -65,21 +65,8 @@
       <p class="name" style="font-size:
       17px;">hello {{session['user']}}</p>
     </div>
-    <a href="/dangxuat" style="color:
-    #ffffff;
-    font-family:
-    Open Sans;
-    font-size:
-    17px;
-    font-weight:
-    600;
-    line-height:
-    28.8px;
-    margin:
-    0px 0px 16px;
-    text-decoration: none;">
+    <form method="post" action="/dangxuat"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit">
       <i class="fa fa-sign-out"></i>
-      Log out</a
-    >
+      Log out</button></form>
   </div>
 </div>

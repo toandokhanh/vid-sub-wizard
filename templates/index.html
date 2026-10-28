@@ -35,7 +35,7 @@ message1 %}
 <div class="center">
   <h1 style="margin-bottom: 100px;">Create subtitles for your videos!</h1>
 
-  <form method="POST" enctype="multipart/form-data" class="index">
+  <form method="POST" enctype="multipart/form-data" class="index"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {{form.hidden_tag()}} {{form.file()}}
     <div class="lang">
       <span>Source language (input)</span>
@@ -57,7 +57,7 @@ message1 %}
   </form>
 </div>
 
-<!-- <form method="POST" enctype="multipart/form-data">
+<!-- <form method="POST" enctype="multipart/form-data"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <select name="language" id="language"></select>
   </form> -->
 {% endblock %}

@@ -1,7 +1,7 @@
 
 {% extends "base.html" %} {% block title %} Tạo phụ đề cho video {% endblock %}
 {% block content %} {% with messages = get_flashed_messages() %} {% if messages
-%} 
+%}
 
 
 
@@ -10,7 +10,7 @@
   <li>{{ messages[0] }}</li>
 </ul>
 {% endif %} {% endwith %}
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">   
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <div class="container_index">
   <div class="nav_index">
     <a href="/" class="href" style="color:
@@ -35,7 +35,7 @@
     <h3 style="text-align: center; margin: 5px 0; color: #ffffff ; font-size: 23px;">Register</h3>
     <br>
     <br>
-    <form method="POST" class="dangky" autocomplete="off">
+    <form method="POST" class="dangky" autocomplete="off"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="form-group">
         <!-- <p>Tên tài khoản</p> -->
         <input type="text" name="username" id="username" required class="" placeholder="Username"/>
@@ -50,7 +50,7 @@
       <div class="form-group">
         <!-- <p>Mật khẩu</p> -->
         <input type="password" name="password2" id="password" required placeholder="Password"/>
-      </div>  
+      </div>
       <input style="color: #ffffff; padding: 8px 40px; margin: 0; background-color: #4b368f;" type="submit" value="Register" name="login" class="dangnhap" />
     </form>
     <div class="check" style="font-weight: bold;">
