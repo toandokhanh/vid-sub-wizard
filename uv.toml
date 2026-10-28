@@ -1,0 +1,19 @@
+# Metadata read from the matching PyPI source distributions; no setup.py execution.
+[[dependency-metadata]]
+name = "pysrt"
+version = "1.1.2"
+requires-dist = ["chardet"]
+[[dependency-metadata]]
+name = "openai-whisper"
+version = "20250625"
+requires-dist = ["more-itertools", "numba", "numpy", "tiktoken", "torch", "tqdm", "triton>=2; (platform_machine == \"x86_64\" and sys_platform == \"linux\") or sys_platform == \"linux2\"", "black; extra == \"dev\"", "flake8; extra == \"dev\"", "isort; extra == \"dev\"", "pytest; extra == \"dev\"", "scipy; extra == \"dev\""]
+
+[[dependency-metadata]]
+name = "demucs"
+version = "4.1.0"
+requires-dist = ["einops", "huggingface-hub", "julius>=0.2.3", "lameenc>=1.2", "numpy<2; sys_platform == \"darwin\" and platform_machine == \"x86_64\"", "pyyaml", "safetensors", "sphn>=0.1.12", "torch<2.3,>=2.1; sys_platform == \"darwin\" and platform_machine == \"x86_64\"", "torch>=2.1; sys_platform != \"darwin\" or platform_machine != \"x86_64\"", "tqdm", "diffq>=0.2.1; extra == \"quantized\"", "dora-search>=0.1.12; extra == \"train\"", "hydra-colorlog>=1.1; extra == \"train\"", "hydra-core>=1.1; extra == \"train\"", "musdb>=0.4.0; extra == \"train\"", "museval; extra == \"train\"", "submitit; extra == \"train\"", "torchaudio<2.3,>=2.1; (sys_platform == \"darwin\" and platform_machine == \"x86_64\") and extra == \"train\"", "torchaudio>=2.1; (sys_platform != \"darwin\" or platform_machine != \"x86_64\") and extra == \"train\"", "treetable; extra == \"train\""]
+
+[[dependency-metadata]]
+name = "inaSpeechSegmenter"
+version = "0.8.0"
+requires-dist = ["numpy", "pandas", "scikit-image", "pyannote.core", "matplotlib", "Pyro4", "pytextgrid", "soundfile", "tensorflow[and-cuda]", "onnxruntime-gpu"]

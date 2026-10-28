@@ -13,7 +13,16 @@ spec.loader.exec_module(security)
 
 class BoundaryTests(unittest.TestCase):
     def test_filename_rejects_shell_and_path_inputs(self):
-        for value in ["../other.mp4", "/tmp/other.mp4", "movie;id.mp4", "$(id).mp4", "--option.mp4", "a..mp4", None, []]:
+        for value in [
+            "../other.mp4",
+            "/tmp/other.mp4",
+            "movie;id.mp4",
+            "$(id).mp4",
+            "--option.mp4",
+            "a..mp4",
+            None,
+            [],
+        ]:
             with self.subTest(value=value), self.assertRaises(ValueError):
                 security.filename(value)
         self.assertEqual(security.filename("a_0123.mp4"), "a_0123.mp4")
@@ -25,7 +34,10 @@ class BoundaryTests(unittest.TestCase):
             (root / "escape.mp4").symlink_to(Path(temp) / "private.mp4")
             with self.assertRaises(ValueError):
                 security.media_path(root, "escape.mp4", ".mp4")
-            self.assertEqual(security.media_path(root, "/videos/ok.mp4", ".mp4"), (root / "ok.mp4").resolve())
+            self.assertEqual(
+                security.media_path(root, "/videos/ok.mp4", ".mp4"),
+                (root / "ok.mp4").resolve(),
+            )
 
     def test_worker_auth_fails_closed(self):
         with patch.dict(os.environ, {}, clear=True):
@@ -44,20 +56,33 @@ class BoundaryTests(unittest.TestCase):
             security.choice("../arbitrary", {"google-cloud", "openai-whisper"})
 
     def test_youtube_hostname_and_video_id(self):
-        for value in ["https://www.youtube.com.evil/watch?v=abcdefghijk", "https://www.youtube.com@evil/watch?v=abcdefghijk", "file:///etc/passwd", "https://youtube.com/watch?v=abc;id"]:
+        for value in [
+            "https://www.youtube.com.evil/watch?v=abcdefghijk",
+            "https://www.youtube.com@evil/watch?v=abcdefghijk",
+            "file:///etc/passwd",
+            "https://youtube.com/watch?v=abc;id",
+        ]:
             with self.assertRaises(ValueError):
                 security.youtube_url(value)
-        self.assertEqual(security.youtube_url("https://youtube.com/watch?v=abcdefghijk&feature=share"), "https://www.youtube.com/watch?v=abcdefghijk")
+        self.assertEqual(
+            security.youtube_url(
+                "https://youtube.com/watch?v=abcdefghijk&feature=share"
+            ),
+            "https://www.youtube.com/watch?v=abcdefghijk",
+        )
 
     def test_process_uses_an_argument_array_without_a_shell(self):
         with patch.object(security.subprocess, "run") as run:
             run.return_value.stdout = "result\n"
-            self.assertEqual(security.run_script("/tmp", "script.py", ["a;not-a-command"]), "result")
+            self.assertEqual(
+                security.run_script("/tmp", "script.py", ["a;not-a-command"]), "result"
+            )
             args, kwargs = run.call_args
             self.assertEqual(args[0][-1], "a;not-a-command")
             self.assertFalse(kwargs.get("shell", False))
             self.assertTrue(kwargs["check"])
             self.assertEqual(kwargs["timeout"], 1800)
+
 
 if __name__ == "__main__":
     unittest.main()

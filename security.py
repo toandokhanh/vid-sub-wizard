@@ -1,4 +1,5 @@
 """Boundary checks for the legacy media workers; no model imports."""
+
 import hmac
 import os
 import re
@@ -23,7 +24,9 @@ def authorized(value):
 
 
 def filename(value, suffix=".mp4"):
-    if not isinstance(value, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,160}", value):
+    if not isinstance(value, str) or not re.fullmatch(
+        r"[A-Za-z0-9][A-Za-z0-9_.-]{0,160}", value
+    ):
         raise ValueError("Invalid media filename")
     if not value.lower().endswith(suffix) or ".." in value:
         raise ValueError("Invalid media filename")
@@ -44,7 +47,9 @@ def media_path(root, value, suffix):
 
 
 def language(value):
-    if not isinstance(value, str) or not re.fullmatch(r"[A-Za-z]{2,3}(?:-[A-Za-z]{2,4})?|auto", value):
+    if not isinstance(value, str) or not re.fullmatch(
+        r"[A-Za-z]{2,3}(?:-[A-Za-z]{2,4})?|auto", value
+    ):
         raise ValueError("Invalid language")
     return value
 
@@ -57,7 +62,11 @@ def choice(value, allowed):
 
 def youtube_url(value):
     u = urlsplit(value)
-    if u.scheme != "https" or u.netloc not in {"www.youtube.com", "youtube.com"} or u.path != "/watch":
+    if (
+        u.scheme != "https"
+        or u.netloc not in {"www.youtube.com", "youtube.com"}
+        or u.path != "/watch"
+    ):
         raise ValueError("Only YouTube watch URLs are supported")
     video_id = parse_qs(u.query).get("v", [""])[0]
     if not re.fullmatch(r"[A-Za-z0-9_-]{11}", video_id):
@@ -66,6 +75,12 @@ def youtube_url(value):
 
 
 def run_script(directory, name, arguments):
-    result = subprocess.run([sys.executable, str(Path(directory) / name), *map(str, arguments)],
-                            cwd=directory, check=True, capture_output=True, text=True, timeout=1800)
+    result = subprocess.run(
+        [sys.executable, str(Path(directory) / name), *map(str, arguments)],
+        cwd=directory,
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=1800,
+    )
     return result.stdout.strip()
